@@ -5,7 +5,10 @@
  */
 package vista;
 
+import com.sun.jdi.connect.spi.Connection;
 import java.awt.Color;
+
+import java.sql.*;
 
 /**
  *
@@ -17,66 +20,65 @@ public class InterfazGrafica extends javax.swing.JFrame {
     private Color fondoPanel = new java.awt.Color(69, 69, 69);
     private Color letras = new java.awt.Color(88, 227, 57);
     private Color letrasC = new java.awt.Color(167, 254, 148);
-    
+
     /**
      * Creates new form InterfazGrafica
      */
     public InterfazGrafica() {
-        
+
         //Inicializamos los componentes
         initComponents();
-        
+
         //Creamos la base de datos
         //Conexion con = new Conexion();
         //conex.creaBaseDeDatos();
-        
         //Establecemos los temas de los componentes
         estableceTemaIncio();
         estableceTemaVisualizaUno();
         estableceTemaJList();
-        
+
         //Establecemos la ventana de forma que no pueda redimensionarse
         setResizable(false);
-        
+
         //Desactivamos los paneles que no nos interesen
         VisualizarJListPanel.show(false);
         VisualizarUnoPanel.show(false);
-        
+
         //Activamos los que si nos interesen
         InicioPanel.show(true);
-        
+
     }
-    
-    public void estableceTemaJList(){ //Establece el tema 
-    
+
+    public void estableceTemaJList() { //Establece el tema 
+
         //Establecemos el color de fondo del panel
         VisualizarJListPanel.setBackground(fondoPanel);
-        
+
         //Establecemos el color de la letra de las etiquetas
         tituloVisualizarJList.setForeground(letras);
         fechaFiltrarLabel.setForeground(letras);
-        
+
         //Establecemos el fondo del panel de scroll
         JListEmpleados.setBackground(fondoPanel);
         JListEmpleados.setForeground(letrasC);
-        
+
         //Establecemos los colores de del boton
         //Establecemos el color de fondo
         fechaFiltrarBoton.setBackground(fondoPanel);
         fechaFiltrarBoton.setForeground(letras);
-        
+
         //Establecemos el color del field
         //Establecemos el color de fondo
         fechaFiltrarField.setBackground(fondoPanel);
         fechaFiltrarField.setForeground(letras);
-        
+
         //Establecemos el texto de 
         fechaFiltrarField.setText("");
-        
+
     }
-    
-    public void estableceTemaVisualizaUno(){ //Establece el tema de el panel visualizar uno a uno
-    
+
+    public void estableceTemaVisualizaUno() { //Establece el tema de el panel visualizar uno a uno
+
         //Establecemos color de las etiquetas
         VisualizarUnoPanel.setBackground(fondoPanel);
         tituloVisualizarUno.setForeground(letras);
@@ -87,59 +89,59 @@ public class InterfazGrafica extends javax.swing.JFrame {
         sueldoEmpleadoLabel.setForeground(letras);
         fechaAltaEmpleadoLabel.setForeground(letras);
         filtroApellidosLabel.setForeground(letras);
-        
+
         //Establecemos color de los field
         //Color de la letra
         tituloVisualizarUno.setForeground(letras);
         numeroEmpleadoField.setForeground(letrasC);
         nombreEmpleadoField.setForeground(letrasC);
         apellidoEmpleadoField.setForeground(letrasC);
-        fotoEmpleadoField.setForeground(letrasC);
+
         sueldoEmpleadoField.setForeground(letrasC);
         fechaAltaEmpleadoField.setForeground(letrasC);
-        
+
         //Color de fondo
         tituloVisualizarUno.setBackground(fondoPanel);
         numeroEmpleadoField.setBackground(fondoPanel);
         nombreEmpleadoField.setBackground(fondoPanel);
         apellidoEmpleadoField.setBackground(fondoPanel);
-        fotoEmpleadoField.setBackground(fondoPanel);
+
         sueldoEmpleadoField.setBackground(fondoPanel);
         fechaAltaEmpleadoField.setBackground(fondoPanel);
-        
+
         //Establecemos el texto de los field en blanco
         numeroEmpleadoField.setText("");
         nombreEmpleadoField.setText("");
         apellidoEmpleadoField.setText("");
-        fotoEmpleadoField.setText("");
+
         sueldoEmpleadoField.setText("");
         fechaAltaEmpleadoField.setText("");
-        
+
         //Establecemos el color de los botones
         //Establecemos el color de las letras
         botonAvanzar.setForeground(letras);
         botonRetroceder.setForeground(letras);
-        
+
         //Establecemos el color del fondo
         botonAvanzar.setBackground(fondoPanel);
         botonRetroceder.setBackground(fondoPanel);
-        
+
         //Establecemos el color del comboBox
         //Establecemos el color de fondo
         listaApellidosCombo.setBackground(fondoPanel);
-        
+
     }
-    
-    public void estableceTemaIncio(){ //Establece el tema del panel de inicio
-    
+
+    public void estableceTemaIncio() { //Establece el tema del panel de inicio
+
         InicioPanel.setBackground(fondoPanel);
         tituloInicio.setForeground(letras);
         autores.setForeground(letras);
         autor1.setForeground(letras);
         autor2.setForeground(letras);
-        
+
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -167,14 +169,12 @@ public class InterfazGrafica extends javax.swing.JFrame {
         numeroEmpleadoField = new javax.swing.JTextField();
         nombreEmpleadoField = new javax.swing.JTextField();
         apellidoEmpleadoField = new javax.swing.JTextField();
-        fotoEmpleadoField = new javax.swing.JTextField();
         sueldoEmpleadoField = new javax.swing.JTextField();
         fechaAltaEmpleadoField = new javax.swing.JTextField();
         botonAvanzar = new javax.swing.JButton();
         botonRetroceder = new javax.swing.JButton();
         filtroApellidosLabel = new javax.swing.JLabel();
         listaApellidosCombo = new javax.swing.JComboBox<>();
-        separador = new javax.swing.JSeparator();
         InicioPanel = new javax.swing.JPanel();
         tituloInicio = new javax.swing.JLabel();
         autores = new javax.swing.JLabel();
@@ -187,6 +187,8 @@ public class InterfazGrafica extends javax.swing.JFrame {
         Inicio = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        VisualizarJListPanel.setPreferredSize(new java.awt.Dimension(700, 500));
 
         tituloVisualizarJList.setText("Datos de los empleados:");
 
@@ -213,7 +215,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
                         .addComponent(fechaFiltrarLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(fechaFiltrarField, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 428, Short.MAX_VALUE)
                         .addComponent(fechaFiltrarBoton)))
                 .addContainerGap())
         );
@@ -228,34 +230,46 @@ public class InterfazGrafica extends javax.swing.JFrame {
                 .addGroup(VisualizarJListPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(fechaFiltrarLabel)
                     .addComponent(fechaFiltrarField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fechaFiltrarBoton, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap(8, Short.MAX_VALUE))
+                    .addComponent(fechaFiltrarBoton, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE))
+                .addContainerGap(105, Short.MAX_VALUE))
         );
 
-        tituloVisualizarUno.setText("Datos del empleado:");
+        VisualizarUnoPanel.setPreferredSize(new java.awt.Dimension(700, 500));
 
+        tituloVisualizarUno.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        tituloVisualizarUno.setText("                                                 Sección de Consultas");
+
+        numeroEmpleadoLabel.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         numeroEmpleadoLabel.setText("Numero:");
 
+        nombreEmpleadoLabel.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         nombreEmpleadoLabel.setText("Nombre:");
 
+        apellidoEmpleadoLabel.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         apellidoEmpleadoLabel.setText("Apellido:");
 
+        fotoEmpleadoLabel.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         fotoEmpleadoLabel.setText("Foto:");
 
+        sueldoEmpleadoLabel.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         sueldoEmpleadoLabel.setText("Sueldo:");
 
+        fechaAltaEmpleadoLabel.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         fechaAltaEmpleadoLabel.setText("Fecha de Alta:");
 
+        numeroEmpleadoField.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         numeroEmpleadoField.setText("jTextField1");
 
+        nombreEmpleadoField.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         nombreEmpleadoField.setText("jTextField2");
 
+        apellidoEmpleadoField.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         apellidoEmpleadoField.setText("jTextField3");
 
-        fotoEmpleadoField.setText("jTextField4");
-
+        sueldoEmpleadoField.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         sueldoEmpleadoField.setText("jTextField5");
 
+        fechaAltaEmpleadoField.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         fechaAltaEmpleadoField.setText("jTextField6");
 
         botonAvanzar.setText("Avanzar");
@@ -272,19 +286,28 @@ public class InterfazGrafica extends javax.swing.JFrame {
             }
         });
 
+        filtroApellidosLabel.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         filtroApellidosLabel.setText("Filtro por apellidos:");
 
-        listaApellidosCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        listaApellidosCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ninguno" }));
+        listaApellidosCombo.setMinimumSize(new java.awt.Dimension(83, 22));
 
         javax.swing.GroupLayout VisualizarUnoPanelLayout = new javax.swing.GroupLayout(VisualizarUnoPanel);
         VisualizarUnoPanel.setLayout(VisualizarUnoPanelLayout);
         VisualizarUnoPanelLayout.setHorizontalGroup(
             VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(VisualizarUnoPanelLayout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, VisualizarUnoPanelLayout.createSequentialGroup()
+                .addGap(15, 15, 15)
                 .addGroup(VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(filtroApellidosLabel)
+                    .addComponent(listaApellidosCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 140, Short.MAX_VALUE)
+                .addGroup(VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(VisualizarUnoPanelLayout.createSequentialGroup()
-                        .addGap(6, 6, 6)
+                        .addComponent(botonRetroceder)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(botonAvanzar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(VisualizarUnoPanelLayout.createSequentialGroup()
                         .addGroup(VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(numeroEmpleadoLabel)
                             .addComponent(nombreEmpleadoLabel)
@@ -292,74 +315,58 @@ public class InterfazGrafica extends javax.swing.JFrame {
                             .addComponent(fotoEmpleadoLabel)
                             .addComponent(sueldoEmpleadoLabel)
                             .addComponent(fechaAltaEmpleadoLabel))
-                        .addGroup(VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(VisualizarUnoPanelLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(numeroEmpleadoField, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
-                                    .addComponent(nombreEmpleadoField))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(listaApellidosCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGroup(VisualizarUnoPanelLayout.createSequentialGroup()
-                                        .addComponent(filtroApellidosLabel)
-                                        .addGap(0, 72, Short.MAX_VALUE))))
-                            .addGroup(VisualizarUnoPanelLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(sueldoEmpleadoField)
-                                    .addComponent(fechaAltaEmpleadoField)
-                                    .addComponent(fotoEmpleadoField)
-                                    .addComponent(apellidoEmpleadoField, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE))))
-                    .addGroup(VisualizarUnoPanelLayout.createSequentialGroup()
-                        .addGroup(VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tituloVisualizarUno)
-                            .addComponent(botonRetroceder))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(botonAvanzar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
-            .addComponent(separador, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGap(65, 65, 65)
+                        .addGroup(VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(numeroEmpleadoField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
+                            .addComponent(nombreEmpleadoField)
+                            .addComponent(apellidoEmpleadoField, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(sueldoEmpleadoField, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(fechaAltaEmpleadoField, javax.swing.GroupLayout.Alignment.TRAILING))))
+                .addGap(18, 18, 18))
+            .addComponent(tituloVisualizarUno, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         VisualizarUnoPanelLayout.setVerticalGroup(
             VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(VisualizarUnoPanelLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(18, 18, 18)
                 .addComponent(tituloVisualizarUno)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(34, 34, 34)
                 .addGroup(VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(numeroEmpleadoField, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(numeroEmpleadoLabel)
-                    .addComponent(numeroEmpleadoField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(filtroApellidosLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nombreEmpleadoLabel)
-                    .addComponent(listaApellidosCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(nombreEmpleadoField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(apellidoEmpleadoLabel)
-                    .addComponent(apellidoEmpleadoField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(fotoEmpleadoLabel)
-                    .addComponent(fotoEmpleadoField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
-                .addGroup(VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(sueldoEmpleadoLabel)
-                    .addComponent(sueldoEmpleadoField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(fechaAltaEmpleadoLabel)
-                    .addComponent(fechaAltaEmpleadoField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(4, 4, 4)
-                .addComponent(separador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(botonAvanzar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(botonRetroceder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addGroup(VisualizarUnoPanelLayout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addGroup(VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(nombreEmpleadoField, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(nombreEmpleadoLabel))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, VisualizarUnoPanelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(listaApellidosCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(2, 2, 2)))
+                .addGroup(VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(apellidoEmpleadoField, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(apellidoEmpleadoLabel))
+                .addGap(81, 81, 81)
+                .addComponent(fotoEmpleadoLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
+                .addGroup(VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(sueldoEmpleadoField, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(sueldoEmpleadoLabel))
+                .addGap(18, 18, 18)
+                .addGroup(VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(fechaAltaEmpleadoField, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fechaAltaEmpleadoLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addGroup(VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botonAvanzar)
+                    .addComponent(botonRetroceder))
+                .addGap(12, 12, 12))
         );
+
+        InicioPanel.setPreferredSize(new java.awt.Dimension(700, 500));
 
         tituloInicio.setText("Gestión Penitenciaria de Burgos");
 
@@ -387,14 +394,14 @@ public class InterfazGrafica extends javax.swing.JFrame {
                                 .addGroup(InicioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(autor2)
                                     .addComponent(autor1))))))
-                .addContainerGap(112, Short.MAX_VALUE))
+                .addContainerGap(427, Short.MAX_VALUE))
         );
         InicioPanelLayout.setVerticalGroup(
             InicioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(InicioPanelLayout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addComponent(tituloInicio)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 182, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 373, Short.MAX_VALUE)
                 .addComponent(autores)
                 .addGap(4, 4, 4)
                 .addComponent(autor1)
@@ -437,7 +444,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 700, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(VisualizarJListPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -447,13 +454,13 @@ public class InterfazGrafica extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 286, Short.MAX_VALUE)
+            .addGap(0, 477, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(VisualizarJListPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(VisualizarJListPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 477, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(VisualizarUnoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(VisualizarUnoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 477, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(InicioPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(InicioPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 477, Short.MAX_VALUE))
         );
 
         pack();
@@ -469,47 +476,80 @@ public class InterfazGrafica extends javax.swing.JFrame {
 
     private void InicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InicioActionPerformed
         // TODO add your handling code here:
-        
+
         //Desactivamos los paneles que no nos interesen
         VisualizarJListPanel.show(false);
         VisualizarUnoPanel.show(false);
-        
+
         //Activamos los que si nos interesen
         InicioPanel.show(true);
-        
+
         //Actualizamos la interfaz grafica
         InicioPanel.updateUI();
         
+
     }//GEN-LAST:event_InicioActionPerformed
 
     private void VisualizarJListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VisualizarJListActionPerformed
         // TODO add your handling code here:
-        
+
         //Desactivamos los paneles que no nos interesen
         VisualizarUnoPanel.show(false);
         InicioPanel.show(false);
-        
+
         //Activamos los que si nos interesen
         VisualizarJListPanel.show(true);
-        
+
         //Actualizamos la interfaz grafica
         VisualizarUnoPanel.updateUI();
-        
+
     }//GEN-LAST:event_VisualizarJListActionPerformed
 
     private void visualizarUnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_visualizarUnoActionPerformed
         // TODO add your handling code here:
-        
+
         //Desactivamos los paneles que no nos interesen
         VisualizarJListPanel.show(false);
         InicioPanel.show(false);
-        
+
         //Activamos los que si nos interesen
         VisualizarUnoPanel.show(true);
-        
+
         //Actualizamos la interfaz grafica
         VisualizarUnoPanel.updateUI();
         
+         System.out.println("Conectado");
+        try {
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+        } catch (Exception e) {
+            System.out.println("JDBC driver falied to load.");
+            return;
+        }
+
+        try {
+
+            var con = DriverManager.getConnection("jdbc:derby://localhost:1527/empresa", "AntFran", "netbeans");
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT DISTINCT APELLIDO FROM EMPLEADO");
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int numCols = rsmd.getColumnCount();
+
+            while (rs.next()) {
+                for (int i = 1; i <= numCols; i++) {
+                    //listaApellidosCombo.add(rs.getString(i));
+                    listaApellidosCombo.addItem(rs.getString(i));
+                    
+                }
+                
+            }
+            rs.close();
+            stmt.close();
+            con.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
     }//GEN-LAST:event_visualizarUnoActionPerformed
 
     /**
@@ -538,7 +578,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(InterfazGrafica.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -568,7 +608,6 @@ public class InterfazGrafica extends javax.swing.JFrame {
     private javax.swing.JTextField fechaFiltrarField;
     private javax.swing.JLabel fechaFiltrarLabel;
     private javax.swing.JLabel filtroApellidosLabel;
-    private javax.swing.JTextField fotoEmpleadoField;
     private javax.swing.JLabel fotoEmpleadoLabel;
     private javax.swing.JComboBox<String> listaApellidosCombo;
     private javax.swing.JMenu menuOpciones;
@@ -577,7 +616,6 @@ public class InterfazGrafica extends javax.swing.JFrame {
     private javax.swing.JTextField numeroEmpleadoField;
     private javax.swing.JLabel numeroEmpleadoLabel;
     private javax.swing.JScrollPane panelScroll;
-    private javax.swing.JSeparator separador;
     private javax.swing.JTextField sueldoEmpleadoField;
     private javax.swing.JLabel sueldoEmpleadoLabel;
     private javax.swing.JLabel tituloInicio;
