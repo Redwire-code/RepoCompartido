@@ -6,9 +6,16 @@
 package vista;
 
 import com.sun.jdi.connect.spi.Connection;
+import controlador.ValidaFecha;
 import java.awt.Color;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import javax.swing.DefaultListModel;
+import modelo.Empleado;
 
 /**
  *
@@ -29,9 +36,14 @@ public class InterfazGrafica extends javax.swing.JFrame {
         //Inicializamos los componentes
         initComponents();
 
-        //Creamos la base de datos
-        //Conexion con = new Conexion();
-        //conex.creaBaseDeDatos();
+        try {
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+            System.out.println("Conectado");
+        } catch (Exception e) {
+            System.out.println("JDBC driver falied to load.");
+            return;
+        }
+        
         //Establecemos los temas de los componentes
         estableceTemaIncio();
         estableceTemaVisualizaUno();
@@ -196,8 +208,9 @@ public class InterfazGrafica extends javax.swing.JFrame {
         Inicio = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(700, 700));
 
-        VisualizarJListPanel.setPreferredSize(new java.awt.Dimension(700, 500));
+        VisualizarJListPanel.setPreferredSize(new java.awt.Dimension(700, 700));
 
         tituloVisualizarJList.setText("Datos de los empleados:");
 
@@ -219,6 +232,11 @@ public class InterfazGrafica extends javax.swing.JFrame {
         fechaFiltrar2Field.setText("jTextField1");
 
         fechaBuscarBoton.setText("Buscar");
+        fechaBuscarBoton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fechaBuscarBotonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout VisualizarJListPanelLayout = new javax.swing.GroupLayout(VisualizarJListPanel);
         VisualizarJListPanel.setLayout(VisualizarJListPanelLayout);
@@ -251,7 +269,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(tituloVisualizarJList)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 383, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panelScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 566, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(VisualizarJListPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(fechaFiltrar1Label)
@@ -260,10 +278,10 @@ public class InterfazGrafica extends javax.swing.JFrame {
                     .addComponent(fechaFiltrar2Label)
                     .addComponent(fechaFiltrar2Field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(fechaBuscarBoton))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
-        VisualizarUnoPanel.setPreferredSize(new java.awt.Dimension(700, 500));
+        VisualizarUnoPanel.setPreferredSize(new java.awt.Dimension(700, 700));
 
         tituloVisualizarUno.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         tituloVisualizarUno.setText("                                                 Sección de Consultas");
@@ -395,7 +413,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
                 .addGap(12, 12, 12))
         );
 
-        InicioPanel.setPreferredSize(new java.awt.Dimension(700, 500));
+        InicioPanel.setPreferredSize(new java.awt.Dimension(700, 700));
 
         tituloInicio.setText("Gestión Penitenciaria de Burgos");
 
@@ -546,14 +564,6 @@ public class InterfazGrafica extends javax.swing.JFrame {
 
         //Actualizamos la interfaz grafica
         VisualizarUnoPanel.updateUI();
-        
-         System.out.println("Conectado");
-        try {
-            Class.forName("org.apache.derby.jdbc.ClientDriver");
-        } catch (Exception e) {
-            System.out.println("JDBC driver falied to load.");
-            return;
-        }
 
         try {
 
@@ -594,6 +604,128 @@ public class InterfazGrafica extends javax.swing.JFrame {
         
     }//GEN-LAST:event_fechaFiltrarBotonActionPerformed
 
+    private void fechaBuscarBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fechaBuscarBotonActionPerformed
+        // TODO add your handling code here:
+        
+        ArrayList<Empleado> empleados = new ArrayList();
+        
+        String cadenaAux = "";
+        
+        String[] arrayString = new String[7];
+        
+        DefaultListModel defLisMod = new DefaultListModel();
+        
+        JListEmpleados.setModel(defLisMod);
+        
+        //Establecemos la fecha de hoy para comparar
+        GregorianCalendar auxF = new GregorianCalendar();
+        int d = auxF.get(Calendar.DAY_OF_MONTH);
+        int m = auxF.get(Calendar.MONTH);
+        int a = auxF.get(Calendar.YEAR);
+
+        GregorianCalendar fechaHoy = new GregorianCalendar(a, m, d);
+        
+        int numero = 0;
+        String nombre = "";
+        String apellido = "";
+        String foto = "";
+        float sueldo = 0;
+        float sueldoMaximo = 0;
+        String fechaAux = "";
+        GregorianCalendar fechaAlta = null;
+        
+        GregorianCalendar fecha1Aux = fechaHoy;
+        GregorianCalendar fecha2Aux = fechaHoy;
+                
+        String fecha1 = "";
+        String fecha2 = "";
+        String consulta = "";
+        
+        if(banderaFiltroFecha == true){
+            
+            if(fechaFiltrar1Field.getText().length() >= 1){
+                fecha1 = fechaFiltrar1Field.getText();
+                fecha1Aux = ValidaFecha.setFechaAlta(fecha1, 0);
+            }
+            
+            if(fechaFiltrar2Field.getText().length() >= 1){
+                fecha2 = fechaFiltrar2Field.getText();
+                fecha2Aux = ValidaFecha.setFechaAlta(fecha2, 0);
+            }
+            
+            if(fecha1Aux != fechaHoy && fecha2Aux != fechaHoy){
+                consulta = "SELECT * FROM EMPLEADO WHERE FECHAALTA >= '"+fecha1+"' AND FECHAALTA <= '"+fecha2+"'";
+            }else{
+                System.out.print("\nEl filtro por fecha esta activado, pero la fecha es nula o erronea, asegurese de que sea correcta.");
+                consulta = "SELECT * FROM EMPLEADO";
+            }
+           
+        } else if (banderaFiltroFecha == false){
+            consulta = "SELECT * FROM EMPLEADO";
+        }
+        
+        try {
+
+            var con = DriverManager.getConnection("jdbc:derby://localhost:1527/empresa", "AntFran", "netbeans");
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(consulta);
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int numCols = rsmd.getColumnCount();
+
+            while (rs.next()) {
+                
+                cadenaAux = "";
+                
+                for (int i = 1; i <= numCols; i++) {
+                    
+                    cadenaAux += rs.getString(i);
+                    if(i != numCols){
+                        cadenaAux += ",";
+                    }
+                    
+                } 
+                
+                arrayString = cadenaAux.split(",");
+                
+                numero = Integer.parseInt(arrayString[0]);
+                nombre = arrayString[1];
+                apellido = arrayString[2];
+                foto = arrayString[3];
+                sueldo = Float.parseFloat(arrayString[4]);
+                sueldoMaximo = Float.parseFloat(arrayString[5]);
+                fechaAux = arrayString[6];
+                fechaAlta = ValidaFecha.setFechaAlta(fechaAux, 0);
+                
+                Empleado empleAux = new Empleado(numero, nombre, apellido, foto, sueldo, sueldoMaximo, fechaAlta);
+                
+                empleados.add(empleAux);
+                
+            }
+            rs.close();
+            stmt.close();
+            con.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        
+        for(Empleado aux: empleados){
+            fechaAux = format(aux.getFechaAlta());
+            defLisMod.addElement("Numero: " + aux.getNumero() + " Apellido: " + aux.getApellido() + " Sueldo: " + aux.getSueldo() + " Sueldo maximo: " + aux.getSueldoMaximo() + " Fecha de alta: " + fechaAux);
+        }
+        
+    }//GEN-LAST:event_fechaBuscarBotonActionPerformed
+
+    public static String format(GregorianCalendar calendar) { //pasa de gregorian calendar a string
+        
+        SimpleDateFormat fmt = new SimpleDateFormat("dd-MMM-yyyy");
+        fmt.setCalendar(calendar);
+        String dateFormatted = fmt.format(calendar.getTime());
+
+        return dateFormatted;
+        
+    }
+    
     /**
      * @param args the command line arguments
      */
