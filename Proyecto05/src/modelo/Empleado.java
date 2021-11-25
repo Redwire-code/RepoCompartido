@@ -15,10 +15,6 @@ public class Empleado {
 
     public Empleado() {
     }
-    
-    
-    
-    
 
     public Empleado(int numero, String nombre, String apellido, String foto, float sueldo, float sueldoMaximo, GregorianCalendar fechaAlta) {
         this.numero = numero;
