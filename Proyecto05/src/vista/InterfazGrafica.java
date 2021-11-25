@@ -5,17 +5,13 @@
  */
 package vista;
 
-import com.sun.jdi.connect.spi.Connection;
-import controlador.ValidaFecha;
 import java.awt.Color;
+import java.awt.Image;
 
 import java.sql.*;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import javax.swing.DefaultListModel;
-import modelo.Empleado;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -35,15 +31,10 @@ public class InterfazGrafica extends javax.swing.JFrame {
 
         //Inicializamos los componentes
         initComponents();
-
-        try {
-            Class.forName("org.apache.derby.jdbc.ClientDriver");
-            System.out.println("Conectado");
-        } catch (Exception e) {
-            System.out.println("JDBC driver falied to load.");
-            return;
-        }
         
+        botonRetroceder.setEnabled(false);
+
+       
         //Establecemos los temas de los componentes
         estableceTemaIncio();
         estableceTemaVisualizaUno();
@@ -68,8 +59,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
 
         //Establecemos el color de la letra de las etiquetas
         tituloVisualizarJList.setForeground(letras);
-        fechaFiltrar1Label.setForeground(letras);
-        fechaFiltrar2Label.setForeground(letras);
+        fechaFiltrarLabel.setForeground(letras);
 
         //Establecemos el fondo del panel de scroll
         JListEmpleados.setBackground(fondoPanel);
@@ -79,35 +69,32 @@ public class InterfazGrafica extends javax.swing.JFrame {
         //Establecemos el color de fondo
         fechaFiltrarBoton.setBackground(fondoPanel);
         fechaFiltrarBoton.setForeground(letras);
-        fechaBuscarBoton.setBackground(fondoPanel);
-        fechaBuscarBoton.setForeground(letras);
 
         //Establecemos el color del field
         //Establecemos el color de fondo
-        fechaFiltrar1Field.setBackground(fondoPanel);
-        fechaFiltrar1Field.setForeground(letras);
-        fechaFiltrar2Field.setBackground(fondoPanel);
-        fechaFiltrar2Field.setForeground(letras);
+        fechaFiltrarField.setBackground(fondoPanel);
+        fechaFiltrarField.setForeground(letras);
 
         //Establecemos el texto de 
-        fechaFiltrar1Field.setText("");
-        fechaFiltrar2Field.setText("");
+        fechaFiltrarField.setText("");
 
     }
 
     public void estableceTemaVisualizaUno() { //Establece el tema de el panel visualizar uno a uno
-
+        
+        jLabelImagen.setText("");
         //Establecemos color de las etiquetas
         VisualizarUnoPanel.setBackground(fondoPanel);
         tituloVisualizarUno.setForeground(letras);
         numeroEmpleadoLabel.setForeground(letras);
         nombreEmpleadoLabel.setForeground(letras);
         apellidoEmpleadoLabel.setForeground(letras);
-        fotoEmpleadoLabel.setForeground(letras);
         sueldoEmpleadoLabel.setForeground(letras);
         fechaAltaEmpleadoLabel.setForeground(letras);
         filtroApellidosLabel.setForeground(letras);
-
+        jLabelSalario.setForeground(letras);
+        fotoEmpleadoLabel.setForeground(letras);
+        
         //Establecemos color de los field
         //Color de la letra
         tituloVisualizarUno.setForeground(letras);
@@ -117,6 +104,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
 
         sueldoEmpleadoField.setForeground(letrasC);
         fechaAltaEmpleadoField.setForeground(letrasC);
+        salarioMaximoEmpleadoField.setForeground(letrasC);
 
         //Color de fondo
         tituloVisualizarUno.setBackground(fondoPanel);
@@ -125,6 +113,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
         apellidoEmpleadoField.setBackground(fondoPanel);
 
         sueldoEmpleadoField.setBackground(fondoPanel);
+        salarioMaximoEmpleadoField.setBackground(fondoPanel);
         fechaAltaEmpleadoField.setBackground(fondoPanel);
 
         //Establecemos el texto de los field en blanco
@@ -139,14 +128,21 @@ public class InterfazGrafica extends javax.swing.JFrame {
         //Establecemos el color de las letras
         botonAvanzar.setForeground(letras);
         botonRetroceder.setForeground(letras);
+        botonAplicarFiltro.setForeground(letras);
+        botonCancelarFiltro.setForeground(letras);
 
         //Establecemos el color del fondo
         botonAvanzar.setBackground(fondoPanel);
         botonRetroceder.setBackground(fondoPanel);
-
+        botonAplicarFiltro.setBackground(fondoPanel);
+        botonCancelarFiltro.setBackground(fondoPanel);
+        
         //Establecemos el color del comboBox
         //Establecemos el color de fondo
         listaApellidosCombo.setBackground(fondoPanel);
+        
+        
+        botonCancelarFiltro.setEnabled(false);
 
     }
 
@@ -173,12 +169,9 @@ public class InterfazGrafica extends javax.swing.JFrame {
         tituloVisualizarJList = new javax.swing.JLabel();
         panelScroll = new javax.swing.JScrollPane();
         JListEmpleados = new javax.swing.JList<>();
-        fechaFiltrar1Label = new javax.swing.JLabel();
-        fechaFiltrar1Field = new javax.swing.JTextField();
+        fechaFiltrarLabel = new javax.swing.JLabel();
+        fechaFiltrarField = new javax.swing.JTextField();
         fechaFiltrarBoton = new javax.swing.JButton();
-        fechaFiltrar2Label = new javax.swing.JLabel();
-        fechaFiltrar2Field = new javax.swing.JTextField();
-        fechaBuscarBoton = new javax.swing.JButton();
         VisualizarUnoPanel = new javax.swing.JPanel();
         tituloVisualizarUno = new javax.swing.JLabel();
         numeroEmpleadoLabel = new javax.swing.JLabel();
@@ -196,6 +189,11 @@ public class InterfazGrafica extends javax.swing.JFrame {
         botonRetroceder = new javax.swing.JButton();
         filtroApellidosLabel = new javax.swing.JLabel();
         listaApellidosCombo = new javax.swing.JComboBox<>();
+        jLabelImagen = new javax.swing.JLabel();
+        botonAplicarFiltro = new javax.swing.JButton();
+        botonCancelarFiltro = new javax.swing.JButton();
+        jLabelSalario = new javax.swing.JLabel();
+        salarioMaximoEmpleadoField = new javax.swing.JTextField();
         InicioPanel = new javax.swing.JPanel();
         tituloInicio = new javax.swing.JLabel();
         autores = new javax.swing.JLabel();
@@ -216,27 +214,11 @@ public class InterfazGrafica extends javax.swing.JFrame {
 
         panelScroll.setViewportView(JListEmpleados);
 
-        fechaFiltrar1Label.setText("Primera Fecha:");
+        fechaFiltrarLabel.setText("Filtrar por fecha:");
 
-        fechaFiltrar1Field.setText("jTextField1");
+        fechaFiltrarField.setText("jTextField1");
 
         fechaFiltrarBoton.setText("Aplicar");
-        fechaFiltrarBoton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fechaFiltrarBotonActionPerformed(evt);
-            }
-        });
-
-        fechaFiltrar2Label.setText("Segunda Fecha:");
-
-        fechaFiltrar2Field.setText("jTextField1");
-
-        fechaBuscarBoton.setText("Buscar");
-        fechaBuscarBoton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fechaBuscarBotonActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout VisualizarJListPanelLayout = new javax.swing.GroupLayout(VisualizarJListPanel);
         VisualizarJListPanel.setLayout(VisualizarJListPanelLayout);
@@ -247,19 +229,13 @@ public class InterfazGrafica extends javax.swing.JFrame {
                 .addGroup(VisualizarJListPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(panelScroll)
                     .addGroup(VisualizarJListPanelLayout.createSequentialGroup()
-                        .addGroup(VisualizarJListPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tituloVisualizarJList)
-                            .addGroup(VisualizarJListPanelLayout.createSequentialGroup()
-                                .addComponent(fechaFiltrar1Label)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(fechaFiltrar1Field, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(fechaFiltrar2Label)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(fechaFiltrar2Field, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 161, Short.MAX_VALUE)
-                                .addComponent(fechaBuscarBoton)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tituloVisualizarJList)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(VisualizarJListPanelLayout.createSequentialGroup()
+                        .addComponent(fechaFiltrarLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(fechaFiltrarField, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 428, Short.MAX_VALUE)
                         .addComponent(fechaFiltrarBoton)))
                 .addContainerGap())
         );
@@ -269,16 +245,13 @@ public class InterfazGrafica extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(tituloVisualizarJList)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 566, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addComponent(panelScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(VisualizarJListPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(fechaFiltrar1Label)
-                    .addComponent(fechaFiltrar1Field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fechaFiltrarBoton)
-                    .addComponent(fechaFiltrar2Label)
-                    .addComponent(fechaFiltrar2Field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fechaBuscarBoton))
-                .addContainerGap())
+                    .addComponent(fechaFiltrarLabel)
+                    .addComponent(fechaFiltrarField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fechaFiltrarBoton, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE))
+                .addContainerGap(105, Short.MAX_VALUE))
         );
 
         VisualizarUnoPanel.setPreferredSize(new java.awt.Dimension(700, 700));
@@ -309,17 +282,29 @@ public class InterfazGrafica extends javax.swing.JFrame {
 
         nombreEmpleadoField.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         nombreEmpleadoField.setText("jTextField2");
+        nombreEmpleadoField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nombreEmpleadoFieldActionPerformed(evt);
+            }
+        });
 
         apellidoEmpleadoField.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        apellidoEmpleadoField.setText("jTextField3");
 
         sueldoEmpleadoField.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        sueldoEmpleadoField.setText("jTextField5");
 
         fechaAltaEmpleadoField.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        fechaAltaEmpleadoField.setText("jTextField6");
+        fechaAltaEmpleadoField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fechaAltaEmpleadoFieldActionPerformed(evt);
+            }
+        });
 
         botonAvanzar.setText("Avanzar");
+        botonAvanzar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botonAvanzarMouseClicked(evt);
+            }
+        });
         botonAvanzar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonAvanzarActionPerformed(evt);
@@ -337,23 +322,63 @@ public class InterfazGrafica extends javax.swing.JFrame {
         filtroApellidosLabel.setText("Filtro por apellidos:");
 
         listaApellidosCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ninguno" }));
-        listaApellidosCombo.setMinimumSize(new java.awt.Dimension(83, 22));
+
+        jLabelImagen.setText("jLabel1");
+
+        botonAplicarFiltro.setText("Aplicar Filtro");
+        botonAplicarFiltro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botonAplicarFiltroMouseClicked(evt);
+            }
+        });
+        botonAplicarFiltro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonAplicarFiltroActionPerformed(evt);
+            }
+        });
+
+        botonCancelarFiltro.setText("Cancelar Filtro");
+        botonCancelarFiltro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botonCancelarFiltroMouseClicked(evt);
+            }
+        });
+        botonCancelarFiltro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonCancelarFiltroActionPerformed(evt);
+            }
+        });
+
+        jLabelSalario.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabelSalario.setText("Salario Maximo: ");
+
+        salarioMaximoEmpleadoField.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        salarioMaximoEmpleadoField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                salarioMaximoEmpleadoFieldActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout VisualizarUnoPanelLayout = new javax.swing.GroupLayout(VisualizarUnoPanel);
         VisualizarUnoPanel.setLayout(VisualizarUnoPanelLayout);
         VisualizarUnoPanelLayout.setHorizontalGroup(
             VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, VisualizarUnoPanelLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
+            .addComponent(tituloVisualizarUno, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE)
+            .addGroup(VisualizarUnoPanelLayout.createSequentialGroup()
+                .addGroup(VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, VisualizarUnoPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(botonCancelarFiltro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, VisualizarUnoPanelLayout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addGroup(VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(filtroApellidosLabel)
+                            .addComponent(listaApellidosCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, VisualizarUnoPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(botonAplicarFiltro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(filtroApellidosLabel)
-                    .addComponent(listaApellidosCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 140, Short.MAX_VALUE)
-                .addGroup(VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(VisualizarUnoPanelLayout.createSequentialGroup()
-                        .addComponent(botonRetroceder)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(botonAvanzar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(VisualizarUnoPanelLayout.createSequentialGroup()
                         .addGroup(VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(numeroEmpleadoLabel)
@@ -364,63 +389,86 @@ public class InterfazGrafica extends javax.swing.JFrame {
                             .addComponent(fechaAltaEmpleadoLabel))
                         .addGap(65, 65, 65)
                         .addGroup(VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(numeroEmpleadoField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
-                            .addComponent(nombreEmpleadoField)
-                            .addComponent(apellidoEmpleadoField, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(sueldoEmpleadoField, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(fechaAltaEmpleadoField, javax.swing.GroupLayout.Alignment.TRAILING))))
-                .addGap(18, 18, 18))
-            .addComponent(tituloVisualizarUno, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabelImagen)
+                            .addComponent(fechaAltaEmpleadoField, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(numeroEmpleadoField, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(nombreEmpleadoField)
+                                .addComponent(apellidoEmpleadoField, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(sueldoEmpleadoField, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE))
+                            .addComponent(botonAvanzar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(salarioMaximoEmpleadoField, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)))
+                    .addComponent(botonRetroceder)
+                    .addComponent(jLabelSalario))
+                .addGap(21, 21, 21))
         );
         VisualizarUnoPanelLayout.setVerticalGroup(
             VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(VisualizarUnoPanelLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(tituloVisualizarUno)
-                .addGap(34, 34, 34)
-                .addGroup(VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(numeroEmpleadoField, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(numeroEmpleadoLabel)
-                    .addComponent(filtroApellidosLabel))
+                .addGap(37, 37, 37)
                 .addGroup(VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(VisualizarUnoPanelLayout.createSequentialGroup()
-                        .addGap(19, 19, 19)
                         .addGroup(VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(nombreEmpleadoField, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(nombreEmpleadoLabel))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, VisualizarUnoPanelLayout.createSequentialGroup()
+                            .addComponent(botonAvanzar)
+                            .addComponent(botonRetroceder))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(numeroEmpleadoField, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(numeroEmpleadoLabel))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(nombreEmpleadoLabel)
+                            .addGroup(VisualizarUnoPanelLayout.createSequentialGroup()
+                                .addComponent(nombreEmpleadoField, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(apellidoEmpleadoField, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(apellidoEmpleadoLabel))))
+                        .addGroup(VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(VisualizarUnoPanelLayout.createSequentialGroup()
+                                .addGap(25, 25, 25)
+                                .addComponent(jLabelImagen))
+                            .addGroup(VisualizarUnoPanelLayout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(fotoEmpleadoLabel)))
+                        .addGap(52, 52, 52)
+                        .addGroup(VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(sueldoEmpleadoLabel)
+                            .addComponent(sueldoEmpleadoField, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(fechaAltaEmpleadoLabel)
+                            .addComponent(fechaAltaEmpleadoField, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabelSalario)
+                            .addComponent(salarioMaximoEmpleadoField, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(231, Short.MAX_VALUE))
+                    .addGroup(VisualizarUnoPanelLayout.createSequentialGroup()
+                        .addComponent(filtroApellidosLabel)
+                        .addGap(44, 44, 44)
                         .addComponent(listaApellidosCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(2, 2, 2)))
-                .addGroup(VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(apellidoEmpleadoField, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(apellidoEmpleadoLabel))
-                .addGap(81, 81, 81)
-                .addComponent(fotoEmpleadoLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
-                .addGroup(VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(sueldoEmpleadoField, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(sueldoEmpleadoLabel))
-                .addGap(18, 18, 18)
-                .addGroup(VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(fechaAltaEmpleadoField, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fechaAltaEmpleadoLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
-                .addGroup(VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botonAvanzar)
-                    .addComponent(botonRetroceder))
-                .addGap(12, 12, 12))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(botonAplicarFiltro)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(botonCancelarFiltro)
+                        .addGap(45, 45, 45))))
         );
 
         InicioPanel.setPreferredSize(new java.awt.Dimension(700, 700));
 
-        tituloInicio.setText("Gestión Penitenciaria de Burgos");
+        tituloInicio.setFont(new java.awt.Font("Javanese Text", 1, 24)); // NOI18N
+        tituloInicio.setText("                         Gestión Penitenciaría de Burgos");
 
+        autores.setFont(new java.awt.Font("Javanese Text", 0, 14)); // NOI18N
         autores.setText("Realizado por:");
 
+        autor1.setFont(new java.awt.Font("Javanese Text", 0, 14)); // NOI18N
         autor1.setText("- Francisco Javier Martínez Martínez");
 
+        autor2.setFont(new java.awt.Font("Javanese Text", 0, 14)); // NOI18N
         autor2.setText("- Antonio Carrasco García");
 
         javax.swing.GroupLayout InicioPanelLayout = new javax.swing.GroupLayout(InicioPanel);
@@ -428,27 +476,23 @@ public class InterfazGrafica extends javax.swing.JFrame {
         InicioPanelLayout.setHorizontalGroup(
             InicioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(InicioPanelLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(InicioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(autores)
                     .addGroup(InicioPanelLayout.createSequentialGroup()
-                        .addContainerGap()
+                        .addGap(6, 6, 6)
                         .addGroup(InicioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(autores)
-                            .addGroup(InicioPanelLayout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addGroup(InicioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(autor2)
-                                    .addComponent(autor1)))))
-                    .addGroup(InicioPanelLayout.createSequentialGroup()
-                        .addGap(257, 257, 257)
-                        .addComponent(tituloInicio)))
-                .addContainerGap(261, Short.MAX_VALUE))
+                            .addComponent(autor2)
+                            .addComponent(autor1))))
+                .addContainerGap(450, Short.MAX_VALUE))
+            .addComponent(tituloInicio, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         InicioPanelLayout.setVerticalGroup(
             InicioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(InicioPanelLayout.createSequentialGroup()
-                .addGap(23, 23, 23)
+                .addGap(24, 24, 24)
                 .addComponent(tituloInicio)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 374, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 277, Short.MAX_VALUE)
                 .addComponent(autores)
                 .addGap(4, 4, 4)
                 .addComponent(autor1)
@@ -519,7 +563,62 @@ public class InterfazGrafica extends javax.swing.JFrame {
 
     private void botonRetrocederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRetrocederActionPerformed
         // TODO add your handling code here:
+        if(!filtro)
+            if (primeraVez) {
+                botonRetroceder.setEnabled(false);
+            } else {
+                try {
+                    Class.forName("org.apache.derby.jdbc.ClientDriver");
+                } catch (Exception e) {
+                    System.out.println("JDBC driver failed to load.");
+                    return;
+                }
+                try {
+                    var con = DriverManager.getConnection("jdbc:derby://localhost:1527/empresa", "AntFran", "netbeans");
+                    funcionRetroceder();
+                    botonAvanzar.setEnabled(true);
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+
+            }
+        else{
+            
+            try {
+                funcionRetroceder();
+            } catch (SQLException ex) {
+                Logger.getLogger(InterfazGrafica.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            
+        }
+
+
     }//GEN-LAST:event_botonRetrocederActionPerformed
+
+    private void funcionRetroceder() throws SQLException {
+
+       
+        if(!rs.isFirst()){
+            botonRetroceder.setEnabled(true);
+            if (rs.previous()) {
+                
+                if(rs.isFirst())
+                    botonRetroceder.setEnabled(false);
+                
+                botonAvanzar.setEnabled(true);
+                    
+                agregarDatosTextField();
+            } else {
+                VentanaEmergente.mostrarMensajeVentana("No hay más registros");
+            }
+            
+        }else
+            botonRetroceder.setEnabled(false);
+        
+        
+        
+    }
 
     private void InicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InicioActionPerformed
         // TODO add your handling code here:
@@ -564,24 +663,29 @@ public class InterfazGrafica extends javax.swing.JFrame {
 
         //Actualizamos la interfaz grafica
         VisualizarUnoPanel.updateUI();
+        
+        try {
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+        } catch (Exception e) {
+            System.out.println("JDBC driver falied to load.");
+            return;
+        }
 
         try {
 
             var con = DriverManager.getConnection("jdbc:derby://localhost:1527/empresa", "AntFran", "netbeans");
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT DISTINCT APELLIDO FROM EMPLEADO");
-            ResultSetMetaData rsmd = rs.getMetaData();
+            ResultSet reSet = stmt.executeQuery("SELECT DISTINCT APELLIDO FROM EMPLEADO");
+            ResultSetMetaData rsmd = reSet.getMetaData();
             int numCols = rsmd.getColumnCount();
-
-            while (rs.next()) {
-                for (int i = 1; i <= numCols; i++) {
-                    //listaApellidosCombo.add(rs.getString(i));
-                    listaApellidosCombo.addItem(rs.getString(i));
-                    
-                }
-                
-            }
-            rs.close();
+              
+            
+            
+            
+            while (reSet.next())
+                for (int i = 1; i <= numCols; i++) 
+                    listaApellidosCombo.addItem(reSet.getString(i));    
+            reSet.close();
             stmt.close();
             con.close();
 
@@ -591,141 +695,156 @@ public class InterfazGrafica extends javax.swing.JFrame {
 
     }//GEN-LAST:event_visualizarUnoActionPerformed
 
-    private void fechaFiltrarBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fechaFiltrarBotonActionPerformed
+    private void botonAvanzarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonAvanzarMouseClicked
         // TODO add your handling code here:
-        
-        if(banderaFiltroFecha == false){
-            banderaFiltroFecha = true;
-            System.out.print("\nFiltro fecha:" + banderaFiltroFecha);
-        }else if(banderaFiltroFecha == true){
-            banderaFiltroFecha = false;
-            System.out.print("\nFiltro fecha:" + banderaFiltroFecha);
+        try {
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+        } catch (Exception e) {
+            System.out.println("JDBC driver failed to load.");
+            return;
         }
         
-    }//GEN-LAST:event_fechaFiltrarBotonActionPerformed
-
-    private void fechaBuscarBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fechaBuscarBotonActionPerformed
-        // TODO add your handling code here:
-        
-        ArrayList<Empleado> empleados = new ArrayList();
-        
-        String cadenaAux = "";
-        
-        String[] arrayString = new String[7];
-        
-        DefaultListModel defLisMod = new DefaultListModel();
-        
-        JListEmpleados.setModel(defLisMod);
-        
-        //Establecemos la fecha de hoy para comparar
-        GregorianCalendar auxF = new GregorianCalendar();
-        int d = auxF.get(Calendar.DAY_OF_MONTH);
-        int m = auxF.get(Calendar.MONTH);
-        int a = auxF.get(Calendar.YEAR);
-
-        GregorianCalendar fechaHoy = new GregorianCalendar(a, m, d);
-        
-        int numero = 0;
-        String nombre = "";
-        String apellido = "";
-        String foto = "";
-        float sueldo = 0;
-        float sueldoMaximo = 0;
-        String fechaAux = "";
-        GregorianCalendar fechaAlta = null;
-        
-        GregorianCalendar fecha1Aux = fechaHoy;
-        GregorianCalendar fecha2Aux = fechaHoy;
-                
-        String fecha1 = "";
-        String fecha2 = "";
-        String consulta = "";
-        
-        if(banderaFiltroFecha == true){
-            
-            if(fechaFiltrar1Field.getText().length() >= 1){
-                fecha1 = fechaFiltrar1Field.getText();
-                fecha1Aux = ValidaFecha.setFechaAlta(fecha1, 0);
-            }
-            
-            if(fechaFiltrar2Field.getText().length() >= 1){
-                fecha2 = fechaFiltrar2Field.getText();
-                fecha2Aux = ValidaFecha.setFechaAlta(fecha2, 0);
-            }
-            
-            if(fecha1Aux != fechaHoy && fecha2Aux != fechaHoy){
-                consulta = "SELECT * FROM EMPLEADO WHERE FECHAALTA >= '"+fecha1+"' AND FECHAALTA <= '"+fecha2+"'";
-            }else{
-                System.out.print("\nEl filtro por fecha esta activado, pero la fecha es nula o erronea, asegurese de que sea correcta.");
-                consulta = "SELECT * FROM EMPLEADO";
-            }
-           
-        } else if (banderaFiltroFecha == false){
-            consulta = "SELECT * FROM EMPLEADO";
-        }
+        Connection con; 
+        Statement stmt = null;
         
         try {
-
-            var con = DriverManager.getConnection("jdbc:derby://localhost:1527/empresa", "AntFran", "netbeans");
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(consulta);
-            ResultSetMetaData rsmd = rs.getMetaData();
-            int numCols = rsmd.getColumnCount();
-
-            while (rs.next()) {
-                
-                cadenaAux = "";
-                
-                for (int i = 1; i <= numCols; i++) {
-                    
-                    cadenaAux += rs.getString(i);
-                    if(i != numCols){
-                        cadenaAux += ",";
-                    }
-                    
-                } 
-                
-                arrayString = cadenaAux.split(",");
-                
-                numero = Integer.parseInt(arrayString[0]);
-                nombre = arrayString[1];
-                apellido = arrayString[2];
-                foto = arrayString[3];
-                sueldo = Float.parseFloat(arrayString[4]);
-                sueldoMaximo = Float.parseFloat(arrayString[5]);
-                fechaAux = arrayString[6];
-                fechaAlta = ValidaFecha.setFechaAlta(fechaAux, 0);
-                
-                Empleado empleAux = new Empleado(numero, nombre, apellido, foto, sueldo, sueldoMaximo, fechaAlta);
-                
-                empleados.add(empleAux);
-                
-            }
-            rs.close();
-            stmt.close();
-            con.close();
-
-        } catch (Exception e) {
-            System.out.println(e);
+            con = DriverManager.getConnection("jdbc:derby://localhost:1527/empresa", "AntFran", "netbeans");
+            stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+        } catch (SQLException ex) {
+            Logger.getLogger(InterfazGrafica.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        for(Empleado aux: empleados){
-            fechaAux = format(aux.getFechaAlta());
-            defLisMod.addElement("Numero: " + aux.getNumero() + " Apellido: " + aux.getApellido() + " Sueldo: " + aux.getSueldo() + " Sueldo maximo: " + aux.getSueldoMaximo() + " Fecha de alta: " + fechaAux);
-        }
-        
-    }//GEN-LAST:event_fechaBuscarBotonActionPerformed
-
-    public static String format(GregorianCalendar calendar) { //pasa de gregorian calendar a string
-        
-        SimpleDateFormat fmt = new SimpleDateFormat("dd-MMM-yyyy");
-        fmt.setCalendar(calendar);
-        String dateFormatted = fmt.format(calendar.getTime());
-
-        return dateFormatted;
-        
-    }
     
+        if (!filtro) {
+            try {
+                if (primeraVez) {
+                    rs = stmt.executeQuery("SELECT * FROM EMPLEADO");
+                    primeraVez = false;
+                }
+                
+                funcionAvanzar();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+
+        } else {
+
+            try {
+                if (primeraVezFiltro) {
+                    rs = stmt.executeQuery(consulta);
+                    primeraVezFiltro = false;
+                }
+                
+                funcionAvanzar();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+
+        }
+    }//GEN-LAST:event_botonAvanzarMouseClicked
+
+    private void botonAplicarFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAplicarFiltroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonAplicarFiltroActionPerformed
+
+    private void botonAplicarFiltroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonAplicarFiltroMouseClicked
+        // TODO add your handling code here:
+        
+        if (listaApellidosCombo.getSelectedIndex() != 0){
+            filtro = true;
+            reiniciarCampos();
+            apell = listaApellidosCombo.getItemAt(listaApellidosCombo.getSelectedIndex());
+            consulta = "SELECT * FROM EMPLEADO WHERE APELLIDO = '"+apell+"'";
+            botonAplicarFiltro.setEnabled(false);
+            botonCancelarFiltro.setEnabled(true);
+        }else
+            VentanaEmergente.mostrarMensajeVentana("No introdujo ningún filtro");
+        
+    }//GEN-LAST:event_botonAplicarFiltroMouseClicked
+
+    private void botonCancelarFiltroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonCancelarFiltroMouseClicked
+        // TODO add your handling code here:
+        filtro = false;
+        botonAvanzar.setEnabled(true);
+        botonRetroceder.setEnabled(false);
+        primeraVezFiltro = true;
+        botonAplicarFiltro.setEnabled(true);
+        botonCancelarFiltro.setEnabled(false);
+        reiniciarCampos();
+        primeraVez= true;
+    }//GEN-LAST:event_botonCancelarFiltroMouseClicked
+
+    public void reiniciarCampos() {
+        numeroEmpleadoField.setText("");
+        nombreEmpleadoField.setText("");
+        apellidoEmpleadoField.setText("");
+        jLabelImagen.setText("");
+        jLabelImagen.setIcon(new ImageIcon());
+        sueldoEmpleadoField.setText("");
+        fechaAltaEmpleadoField.setText("");
+        salarioMaximoEmpleadoField.setText("");
+    }
+
+    private void botonCancelarFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarFiltroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonCancelarFiltroActionPerformed
+
+    private void salarioMaximoEmpleadoFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salarioMaximoEmpleadoFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_salarioMaximoEmpleadoFieldActionPerformed
+
+    private void fechaAltaEmpleadoFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fechaAltaEmpleadoFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fechaAltaEmpleadoFieldActionPerformed
+
+    private void nombreEmpleadoFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombreEmpleadoFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nombreEmpleadoFieldActionPerformed
+
+    private void funcionAvanzar() throws SQLException {
+        
+        
+        if(!rs.isLast()){
+             botonAvanzar.setEnabled(true);
+                
+            if (rs.next()) {
+                
+                if(rs.isLast())
+                    botonAvanzar.setEnabled(false);
+                
+                agregarDatosTextField();
+            } else {
+                botonAvanzar.setEnabled(false);
+                VentanaEmergente.mostrarMensajeVentana("No hay mas registros en el filtro");
+            }
+        }else{
+            botonAvanzar.setEnabled(false);
+        }
+        
+        if(!rs.isFirst())
+            botonRetroceder.setEnabled(true);
+        else
+            botonRetroceder.setEnabled(false);
+       
+    }
+
+    private void agregarDatosTextField() throws SQLException {
+        
+        
+        numeroEmpleadoField.setText(rs.getString(1));
+        nombreEmpleadoField.setText(rs.getString(2));
+        apellidoEmpleadoField.setText(rs.getString(3));
+        
+        //Redimensionamos la imagen
+        Image img= new ImageIcon("./fotos/"+rs.getString(4)).getImage();
+        ImageIcon img2 =new ImageIcon(img.getScaledInstance(172, 172, Image.SCALE_SMOOTH));
+        
+        jLabelImagen.setIcon(img2);
+        sueldoEmpleadoField.setText(rs.getString(5));
+        salarioMaximoEmpleadoField.setText(rs.getString(6));
+        
+        fechaAltaEmpleadoField.setText(rs.getString(7));
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -760,10 +879,15 @@ public class InterfazGrafica extends javax.swing.JFrame {
             }
         });
     }
-
-    //Variables
-    private static boolean banderaFiltroFecha = false;
     
+    
+    static boolean primeraVezFiltro = true;
+    static String apell;
+    static String consulta;
+    static ResultSet rs;
+    static boolean primeraVez = true;
+    static boolean filtro = false;
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar BarraMenu;
     private javax.swing.JMenuItem Inicio;
@@ -777,18 +901,19 @@ public class InterfazGrafica extends javax.swing.JFrame {
     private javax.swing.JLabel autor1;
     private javax.swing.JLabel autor2;
     private javax.swing.JLabel autores;
+    private javax.swing.JButton botonAplicarFiltro;
     private javax.swing.JButton botonAvanzar;
+    private javax.swing.JButton botonCancelarFiltro;
     private javax.swing.JButton botonRetroceder;
     private javax.swing.JTextField fechaAltaEmpleadoField;
     private javax.swing.JLabel fechaAltaEmpleadoLabel;
-    private javax.swing.JButton fechaBuscarBoton;
-    private javax.swing.JTextField fechaFiltrar1Field;
-    private javax.swing.JLabel fechaFiltrar1Label;
-    private javax.swing.JTextField fechaFiltrar2Field;
-    private javax.swing.JLabel fechaFiltrar2Label;
     private javax.swing.JButton fechaFiltrarBoton;
+    private javax.swing.JTextField fechaFiltrarField;
+    private javax.swing.JLabel fechaFiltrarLabel;
     private javax.swing.JLabel filtroApellidosLabel;
     private javax.swing.JLabel fotoEmpleadoLabel;
+    private javax.swing.JLabel jLabelImagen;
+    private javax.swing.JLabel jLabelSalario;
     private javax.swing.JComboBox<String> listaApellidosCombo;
     private javax.swing.JMenu menuOpciones;
     private javax.swing.JTextField nombreEmpleadoField;
@@ -796,6 +921,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
     private javax.swing.JTextField numeroEmpleadoField;
     private javax.swing.JLabel numeroEmpleadoLabel;
     private javax.swing.JScrollPane panelScroll;
+    private javax.swing.JTextField salarioMaximoEmpleadoField;
     private javax.swing.JTextField sueldoEmpleadoField;
     private javax.swing.JLabel sueldoEmpleadoLabel;
     private javax.swing.JLabel tituloInicio;
@@ -803,4 +929,5 @@ public class InterfazGrafica extends javax.swing.JFrame {
     private javax.swing.JLabel tituloVisualizarUno;
     private javax.swing.JMenuItem visualizarUno;
     // End of variables declaration//GEN-END:variables
+    
 }

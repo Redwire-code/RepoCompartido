@@ -1,20 +1,36 @@
+<<<<<<< HEAD
 Thu Nov 25 02:01:01 CET 2021 : Servidor de red Apache Derby: Se ha iniciado 10.14.2.0 - (1828579) y está listo para aceptar las conexiones en el puerto 1527
 ----------------------------------------------------------------
 Thu Nov 25 02:01:01 CET 2021:
  Iniciando instancia a816c00e-017d-549c-1ca8-ffff8969c650 de Derby, versión The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): 
 en el directorio de base de datos C:\Users\root\Documents\NetBeansProjects\Proyecto05\src\controlador\empresa con el cargador de clases jdk.internal.loader.ClassLoaders$AppClassLoader@c387f44
 Cargado desde file:/C:/Users/root/Desktop/DriversDB/db-derby-10.14.2.0-bin/lib/derby.jar
+=======
+Thu Nov 25 02:23:59 CET 2021 : Servidor de red Apache Derby: Se ha iniciado 10.14.2.0 - (1828579) y está listo para aceptar las conexiones en el puerto 1527
+----------------------------------------------------------------
+Thu Nov 25 02:23:59 CET 2021:
+ Iniciando instancia a816c00e-017d-54b1-21b7-00007169750c de Derby, versión The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): 
+en el directorio de base de datos C:\Users\Onio\Documents\GitHub\RepoCompartido\Proyecto05\src\controlador\empresa con el cargador de clases jdk.internal.loader.ClassLoaders$AppClassLoader@c387f44
+Cargado desde file:/C:/Users/Onio/Downloads/db-derby-10.14.2.0-bin/lib/derby.jar
+>>>>>>> bcd7cd51097db14fab668ea707d5f3f73bde1952
 java.vendor=Oracle Corporation
 java.runtime.version=13.0.2+8
-user.dir=C:\Users\root\Desktop\DriversDB\db-derby-10.14.2.0-bin
+user.dir=C:\Users\Onio\Downloads\db-derby-10.14.2.0-bin
 os.name=Windows 10
 os.arch=amd64
 os.version=10.0
-derby.system.home=C:\Users\root\Documents\NetBeansProjects\Proyecto05\src\controlador
+derby.system.home=C:\Users\Onio\Documents\GitHub\RepoCompartido\Proyecto05\src\controlador
 Cargador de clases de base de datos iniciado - derby.database.classpath=''
 ----------------------------------------------------------------
+<<<<<<< HEAD
 Thu Nov 25 02:01:25 CET 2021: cerrando motor de Derby
 ----------------------------------------------------------------
 Thu Nov 25 02:01:25 CET 2021:
 Cerrando la instancia a816c00e-017d-549c-1ca8-ffff8969c650 en el directorio de base de datos C:\Users\root\Documents\NetBeansProjects\Proyecto05\src\controlador\empresa con cargador de clases jdk.internal.loader.ClassLoaders$AppClassLoader@c387f44
+=======
+Thu Nov 25 02:25:16 CET 2021: cerrando motor de Derby
+----------------------------------------------------------------
+Thu Nov 25 02:25:16 CET 2021:
+Cerrando la instancia a816c00e-017d-54b1-21b7-00007169750c en el directorio de base de datos C:\Users\Onio\Documents\GitHub\RepoCompartido\Proyecto05\src\controlador\empresa con cargador de clases jdk.internal.loader.ClassLoaders$AppClassLoader@c387f44
+>>>>>>> bcd7cd51097db14fab668ea707d5f3f73bde1952
 ----------------------------------------------------------------
