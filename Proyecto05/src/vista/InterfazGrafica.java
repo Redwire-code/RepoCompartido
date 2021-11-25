@@ -612,7 +612,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
             } else {
                 VentanaEmergente.mostrarMensajeVentana("No hay más registros");
             }
-            System.out.println("AAA");
+            
         }else
             botonRetroceder.setEnabled(false);
         
@@ -829,7 +829,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
 
     private void agregarDatosTextField() throws SQLException {
         
-        System.out.println(rs.getString(1)+" "+rs.getString(2)+" "+rs.getString(3)+" "+rs.getString(4)+" "+rs.getString(5)+" "+rs.getString(6));
+        
         numeroEmpleadoField.setText(rs.getString(1));
         nombreEmpleadoField.setText(rs.getString(2));
         apellidoEmpleadoField.setText(rs.getString(3));
