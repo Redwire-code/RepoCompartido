@@ -107,14 +107,21 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="panelScroll" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
-                          <Component id="tituloVisualizarJList" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="fechaFiltrarLabel" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="fechaFiltrarField" min="-2" pref="90" max="-2" attributes="0"/>
-                          <EmptySpace pref="428" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="tituloVisualizarJList" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="fechaFiltrar1Label" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="fechaFiltrar1Field" min="-2" pref="90" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="fechaFiltrar2Label" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="fechaFiltrar2Field" min="-2" pref="90" max="-2" attributes="0"/>
+                                  <EmptySpace pref="161" max="32767" attributes="0"/>
+                                  <Component id="fechaBuscarBoton" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="fechaFiltrarBoton" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -128,14 +135,17 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="tituloVisualizarJList" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="panelScroll" min="-2" pref="220" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="panelScroll" pref="566" max="32767" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="fechaFiltrarLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="fechaFiltrarField" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="fechaFiltrarBoton" alignment="3" pref="118" max="32767" attributes="0"/>
+                      <Component id="fechaFiltrar1Label" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="fechaFiltrar1Field" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="fechaFiltrarBoton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="fechaFiltrar2Label" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="fechaFiltrar2Field" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="fechaBuscarBoton" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="105" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -165,12 +175,12 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JLabel" name="fechaFiltrarLabel">
+        <Component class="javax.swing.JLabel" name="fechaFiltrar1Label">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Filtrar por fecha:"/>
+            <Property name="text" type="java.lang.String" value="Primera Fecha:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="fechaFiltrarField">
+        <Component class="javax.swing.JTextField" name="fechaFiltrar1Field">
           <Properties>
             <Property name="text" type="java.lang.String" value="jTextField1"/>
           </Properties>
@@ -179,6 +189,27 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Aplicar"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fechaFiltrarBotonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="fechaFiltrar2Label">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Segunda Fecha:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="fechaFiltrar2Field">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="jTextField1"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="fechaBuscarBoton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Buscar"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fechaBuscarBotonActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -192,28 +223,20 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="tituloVisualizarUno" alignment="1" pref="700" max="32767" attributes="0"/>
-              <Group type="102" alignment="0" attributes="0">
-                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="botonCancelarFiltro" max="32767" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="filtroApellidosLabel" min="-2" max="-2" attributes="0"/>
-                              <Component id="listaApellidosCombo" min="-2" pref="184" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="botonAplicarFiltro" max="32767" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
+                      <Component id="filtroApellidosLabel" min="-2" max="-2" attributes="0"/>
+                      <Component id="listaApellidosCombo" min="-2" pref="184" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace pref="140" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Component id="botonRetroceder" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="botonAvanzar" min="-2" pref="90" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="numeroEmpleadoLabel" min="-2" max="-2" attributes="0"/>
                               <Component id="nombreEmpleadoLabel" min="-2" max="-2" attributes="0"/>
@@ -224,23 +247,17 @@
                           </Group>
                           <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jLabelImagen" min="-2" max="-2" attributes="0"/>
-                              <Component id="fechaAltaEmpleadoField" alignment="0" pref="183" max="32767" attributes="0"/>
-                              <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="numeroEmpleadoField" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="nombreEmpleadoField" max="32767" attributes="0"/>
-                                  <Component id="apellidoEmpleadoField" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="sueldoEmpleadoField" alignment="0" pref="183" max="32767" attributes="0"/>
-                              </Group>
-                              <Component id="botonAvanzar" alignment="1" min="-2" pref="90" max="-2" attributes="0"/>
-                              <Component id="salarioMaximoEmpleadoField" alignment="0" pref="183" max="32767" attributes="0"/>
+                              <Component id="numeroEmpleadoField" alignment="1" pref="183" max="32767" attributes="0"/>
+                              <Component id="nombreEmpleadoField" max="32767" attributes="0"/>
+                              <Component id="apellidoEmpleadoField" alignment="1" max="32767" attributes="0"/>
+                              <Component id="sueldoEmpleadoField" alignment="1" max="32767" attributes="0"/>
+                              <Component id="fechaAltaEmpleadoField" alignment="1" max="32767" attributes="0"/>
                           </Group>
                       </Group>
-                      <Component id="botonRetroceder" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabelSalario" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
               </Group>
+              <Component id="tituloVisualizarUno" alignment="1" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
@@ -248,68 +265,49 @@
               <Group type="102" attributes="0">
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="tituloVisualizarUno" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="numeroEmpleadoField" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
+                      <Component id="numeroEmpleadoLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="filtroApellidosLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="botonAvanzar" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="botonRetroceder" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="nombreEmpleadoField" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
+                              <Component id="nombreEmpleadoLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="numeroEmpleadoField" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
-                              <Component id="numeroEmpleadoLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="nombreEmpleadoLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="nombreEmpleadoField" min="-2" pref="29" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="apellidoEmpleadoField" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
-                                      <Component id="apellidoEmpleadoLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                          </Group>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
-                                  <Component id="jLabelImagen" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="fotoEmpleadoLabel" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="sueldoEmpleadoLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="sueldoEmpleadoField" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="fechaAltaEmpleadoLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="fechaAltaEmpleadoField" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jLabelSalario" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="salarioMaximoEmpleadoField" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace pref="231" max="32767" attributes="0"/>
                       </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="filtroApellidosLabel" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="listaApellidosCombo" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Component id="botonAplicarFiltro" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="botonCancelarFiltro" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="apellidoEmpleadoField" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
+                      <Component id="apellidoEmpleadoLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="81" max="-2" attributes="0"/>
+                  <Component id="fotoEmpleadoLabel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="68" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="sueldoEmpleadoField" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
+                      <Component id="sueldoEmpleadoLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="fechaAltaEmpleadoField" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
+                      <Component id="fechaAltaEmpleadoLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace pref="7" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="botonAvanzar" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="botonRetroceder" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -386,15 +384,13 @@
             </Property>
             <Property name="text" type="java.lang.String" value="jTextField2"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="nombreEmpleadoFieldActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="apellidoEmpleadoField">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="16" style="0"/>
             </Property>
+            <Property name="text" type="java.lang.String" value="jTextField3"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="sueldoEmpleadoField">
@@ -402,6 +398,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="16" style="0"/>
             </Property>
+            <Property name="text" type="java.lang.String" value="jTextField5"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="fechaAltaEmpleadoField">
@@ -409,17 +406,14 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="16" style="0"/>
             </Property>
+            <Property name="text" type="java.lang.String" value="jTextField6"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fechaAltaEmpleadoFieldActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="botonAvanzar">
           <Properties>
             <Property name="text" type="java.lang.String" value="Avanzar"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="botonAvanzarMouseClicked"/>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonAvanzarActionPerformed"/>
           </Events>
         </Component>
@@ -446,51 +440,13 @@
                 <StringItem index="0" value="Ninguno"/>
               </StringArray>
             </Property>
+            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[83, 22]"/>
+            </Property>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
-        </Component>
-        <Component class="javax.swing.JLabel" name="jLabelImagen">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jLabel1"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="botonAplicarFiltro">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Aplicar Filtro"/>
-          </Properties>
-          <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="botonAplicarFiltroMouseClicked"/>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonAplicarFiltroActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="botonCancelarFiltro">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Cancelar Filtro"/>
-          </Properties>
-          <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="botonCancelarFiltroMouseClicked"/>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonCancelarFiltroActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JLabel" name="jLabelSalario">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="16" style="0"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Salario Maximo: "/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="salarioMaximoEmpleadoField">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="16" style="0"/>
-            </Property>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="salarioMaximoEmpleadoFieldActionPerformed"/>
-          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -505,28 +461,35 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="autores" min="-2" max="-2" attributes="0"/>
                       <Group type="102" attributes="0">
-                          <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="autor2" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="autor1" min="-2" max="-2" attributes="0"/>
+                              <Component id="autores" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="autor2" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="autor1" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
                           </Group>
                       </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="257" max="-2" attributes="0"/>
+                          <Component id="tituloInicio" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace pref="450" max="32767" attributes="0"/>
+                  <EmptySpace pref="261" max="32767" attributes="0"/>
               </Group>
-              <Component id="tituloInicio" alignment="1" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                   <Component id="tituloInicio" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="277" max="32767" attributes="0"/>
+                  <EmptySpace pref="374" max="32767" attributes="0"/>
                   <Component id="autores" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
                   <Component id="autor1" min="-2" max="-2" attributes="0"/>
@@ -540,33 +503,21 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="tituloInicio">
           <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Javanese Text" size="24" style="1"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="                         Gesti&#xf3;n Penitenciar&#xed;a de Burgos"/>
+            <Property name="text" type="java.lang.String" value="Gesti&#xf3;n Penitenciaria de Burgos"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="autores">
           <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Javanese Text" size="14" style="0"/>
-            </Property>
             <Property name="text" type="java.lang.String" value="Realizado por:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="autor1">
           <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Javanese Text" size="14" style="0"/>
-            </Property>
             <Property name="text" type="java.lang.String" value="- Francisco Javier Mart&#xed;nez Mart&#xed;nez"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="autor2">
           <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Javanese Text" size="14" style="0"/>
-            </Property>
             <Property name="text" type="java.lang.String" value="- Antonio Carrasco Garc&#xed;a"/>
           </Properties>
         </Component>
