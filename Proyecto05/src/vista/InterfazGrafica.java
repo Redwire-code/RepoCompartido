@@ -6,8 +6,11 @@
 package vista;
 
 import java.awt.Color;
+import java.awt.Image;
 
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 
 /**
@@ -89,7 +92,9 @@ public class InterfazGrafica extends javax.swing.JFrame {
         sueldoEmpleadoLabel.setForeground(letras);
         fechaAltaEmpleadoLabel.setForeground(letras);
         filtroApellidosLabel.setForeground(letras);
-
+        jLabelSalario.setForeground(letras);
+        fotoEmpleadoLabel.setForeground(letras);
+        
         //Establecemos color de los field
         //Color de la letra
         tituloVisualizarUno.setForeground(letras);
@@ -99,6 +104,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
 
         sueldoEmpleadoField.setForeground(letrasC);
         fechaAltaEmpleadoField.setForeground(letrasC);
+        salarioMaximoEmpleadoField.setForeground(letrasC);
 
         //Color de fondo
         tituloVisualizarUno.setBackground(fondoPanel);
@@ -107,6 +113,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
         apellidoEmpleadoField.setBackground(fondoPanel);
 
         sueldoEmpleadoField.setBackground(fondoPanel);
+        salarioMaximoEmpleadoField.setBackground(fondoPanel);
         fechaAltaEmpleadoField.setBackground(fondoPanel);
 
         //Establecemos el texto de los field en blanco
@@ -133,6 +140,9 @@ public class InterfazGrafica extends javax.swing.JFrame {
         //Establecemos el color del comboBox
         //Establecemos el color de fondo
         listaApellidosCombo.setBackground(fondoPanel);
+        
+        
+        botonCancelarFiltro.setEnabled(false);
 
     }
 
@@ -182,6 +192,8 @@ public class InterfazGrafica extends javax.swing.JFrame {
         jLabelImagen = new javax.swing.JLabel();
         botonAplicarFiltro = new javax.swing.JButton();
         botonCancelarFiltro = new javax.swing.JButton();
+        jLabelSalario = new javax.swing.JLabel();
+        salarioMaximoEmpleadoField = new javax.swing.JTextField();
         InicioPanel = new javax.swing.JPanel();
         tituloInicio = new javax.swing.JLabel();
         autores = new javax.swing.JLabel();
@@ -194,9 +206,9 @@ public class InterfazGrafica extends javax.swing.JFrame {
         Inicio = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(700, 650));
+        setPreferredSize(new java.awt.Dimension(700, 700));
 
-        VisualizarJListPanel.setPreferredSize(new java.awt.Dimension(700, 650));
+        VisualizarJListPanel.setPreferredSize(new java.awt.Dimension(700, 700));
 
         tituloVisualizarJList.setText("Datos de los empleados:");
 
@@ -242,7 +254,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
                 .addContainerGap(105, Short.MAX_VALUE))
         );
 
-        VisualizarUnoPanel.setPreferredSize(new java.awt.Dimension(700, 650));
+        VisualizarUnoPanel.setPreferredSize(new java.awt.Dimension(700, 700));
 
         tituloVisualizarUno.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         tituloVisualizarUno.setText("                                                 Sección de Consultas");
@@ -270,15 +282,22 @@ public class InterfazGrafica extends javax.swing.JFrame {
 
         nombreEmpleadoField.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         nombreEmpleadoField.setText("jTextField2");
+        nombreEmpleadoField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nombreEmpleadoFieldActionPerformed(evt);
+            }
+        });
 
         apellidoEmpleadoField.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        apellidoEmpleadoField.setText("jTextField3");
 
         sueldoEmpleadoField.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        sueldoEmpleadoField.setText("jTextField5");
 
         fechaAltaEmpleadoField.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        fechaAltaEmpleadoField.setText("jTextField6");
+        fechaAltaEmpleadoField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fechaAltaEmpleadoFieldActionPerformed(evt);
+            }
+        });
 
         botonAvanzar.setText("Avanzar");
         botonAvanzar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -303,7 +322,6 @@ public class InterfazGrafica extends javax.swing.JFrame {
         filtroApellidosLabel.setText("Filtro por apellidos:");
 
         listaApellidosCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ninguno" }));
-        listaApellidosCombo.setMinimumSize(new java.awt.Dimension(83, 22));
 
         jLabelImagen.setText("jLabel1");
 
@@ -320,6 +338,26 @@ public class InterfazGrafica extends javax.swing.JFrame {
         });
 
         botonCancelarFiltro.setText("Cancelar Filtro");
+        botonCancelarFiltro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botonCancelarFiltroMouseClicked(evt);
+            }
+        });
+        botonCancelarFiltro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonCancelarFiltroActionPerformed(evt);
+            }
+        });
+
+        jLabelSalario.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabelSalario.setText("Salario Maximo: ");
+
+        salarioMaximoEmpleadoField.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        salarioMaximoEmpleadoField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                salarioMaximoEmpleadoFieldActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout VisualizarUnoPanelLayout = new javax.swing.GroupLayout(VisualizarUnoPanel);
         VisualizarUnoPanel.setLayout(VisualizarUnoPanelLayout);
@@ -350,17 +388,18 @@ public class InterfazGrafica extends javax.swing.JFrame {
                             .addComponent(sueldoEmpleadoLabel)
                             .addComponent(fechaAltaEmpleadoLabel))
                         .addGap(65, 65, 65)
-                        .addGroup(VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabelImagen)
-                            .addGroup(VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(fechaAltaEmpleadoField, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(numeroEmpleadoField, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(nombreEmpleadoField)
-                                    .addComponent(apellidoEmpleadoField, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(sueldoEmpleadoField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(botonAvanzar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(botonRetroceder))
+                            .addComponent(fechaAltaEmpleadoField, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(numeroEmpleadoField, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(nombreEmpleadoField)
+                                .addComponent(apellidoEmpleadoField, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(sueldoEmpleadoField, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE))
+                            .addComponent(botonAvanzar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(salarioMaximoEmpleadoField, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)))
+                    .addComponent(botonRetroceder)
+                    .addComponent(jLabelSalario))
                 .addGap(21, 21, 21))
         );
         VisualizarUnoPanelLayout.setVerticalGroup(
@@ -402,7 +441,11 @@ public class InterfazGrafica extends javax.swing.JFrame {
                         .addGroup(VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(fechaAltaEmpleadoLabel)
                             .addComponent(fechaAltaEmpleadoField, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(98, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabelSalario)
+                            .addComponent(salarioMaximoEmpleadoField, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(231, Short.MAX_VALUE))
                     .addGroup(VisualizarUnoPanelLayout.createSequentialGroup()
                         .addComponent(filtroApellidosLabel)
                         .addGap(44, 44, 44)
@@ -414,7 +457,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
                         .addGap(45, 45, 45))))
         );
 
-        InicioPanel.setPreferredSize(new java.awt.Dimension(700, 650));
+        InicioPanel.setPreferredSize(new java.awt.Dimension(700, 700));
 
         tituloInicio.setFont(new java.awt.Font("Javanese Text", 1, 24)); // NOI18N
         tituloInicio.setText("                         Gestión Penitenciaría de Burgos");
@@ -520,52 +563,61 @@ public class InterfazGrafica extends javax.swing.JFrame {
 
     private void botonRetrocederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRetrocederActionPerformed
         // TODO add your handling code here:
-        if (primeraVez) {
-            botonRetroceder.setEnabled(false);
-        } else {
+        if(!filtro)
+            if (primeraVez) {
+                botonRetroceder.setEnabled(false);
+            } else {
+                try {
+                    Class.forName("org.apache.derby.jdbc.ClientDriver");
+                } catch (Exception e) {
+                    System.out.println("JDBC driver failed to load.");
+                    return;
+                }
+                try {
+                    var con = DriverManager.getConnection("jdbc:derby://localhost:1527/empresa", "AntFran", "netbeans");
+                    funcionRetroceder();
+                    botonAvanzar.setEnabled(true);
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+
+            }
+        else{
             
             try {
-                Class.forName("org.apache.derby.jdbc.ClientDriver");
-            } catch (Exception e) {
-                System.out.println("JDBC driver failed to load.");
-                return;
-            }
-            try {
-
-                var con = DriverManager.getConnection("jdbc:derby://localhost:1527/empresa", "AntFran", "netbeans");
-                
                 funcionRetroceder();
-                
-                botonAvanzar.setEnabled(true);
-                
-                
-            } catch (Exception e) {
-                System.out.println(e);
+            } catch (SQLException ex) {
+                Logger.getLogger(InterfazGrafica.class.getName()).log(Level.SEVERE, null, ex);
             }
-
+            
+            
         }
 
 
     }//GEN-LAST:event_botonRetrocederActionPerformed
 
     private void funcionRetroceder() throws SQLException {
+
        
-        rs.previous();
-        
-        if (rs.isFirst()){
+        if(!rs.isFirst()){
+            botonRetroceder.setEnabled(true);
+            if (rs.previous()) {
+                
+                if(rs.isFirst())
+                    botonRetroceder.setEnabled(false);
+                
+                botonAvanzar.setEnabled(true);
+                    
+                agregarDatosTextField();
+            } else {
+                VentanaEmergente.mostrarMensajeVentana("No hay más registros");
+            }
+            System.out.println("AAA");
+        }else
             botonRetroceder.setEnabled(false);
-        }else{
-             botonRetroceder.setEnabled(true);
-        }
         
-        rs.next();
         
-        if(rs.previous()){
-            agregarDatosTextField();
-        }else{
-            botonRetroceder.setEnabled(false);
-            VentanaEmergente.mostrarMensajeVentana("No hay más registros");
-        }
+        
     }
 
     private void InicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InicioActionPerformed
@@ -626,7 +678,10 @@ public class InterfazGrafica extends javax.swing.JFrame {
             ResultSet reSet = stmt.executeQuery("SELECT DISTINCT APELLIDO FROM EMPLEADO");
             ResultSetMetaData rsmd = reSet.getMetaData();
             int numCols = rsmd.getColumnCount();
-
+              
+            
+            
+            
             while (reSet.next())
                 for (int i = 1; i <= numCols; i++) 
                     listaApellidosCombo.addItem(reSet.getString(i));    
@@ -648,46 +703,43 @@ public class InterfazGrafica extends javax.swing.JFrame {
             System.out.println("JDBC driver failed to load.");
             return;
         }
-        if(!filtro)
+        
+        Connection con; 
+        Statement stmt = null;
+        
+        try {
+            con = DriverManager.getConnection("jdbc:derby://localhost:1527/empresa", "AntFran", "netbeans");
+            stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+        } catch (SQLException ex) {
+            Logger.getLogger(InterfazGrafica.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+        if (!filtro) {
             try {
-
-                var con = DriverManager.getConnection("jdbc:derby://localhost:1527/empresa", "AntFran", "netbeans");
-                Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
-                if (primeraVez){
+                if (primeraVez) {
                     rs = stmt.executeQuery("SELECT * FROM EMPLEADO");
                     primeraVez = false;
-
                 }
-                botonRetroceder.setEnabled(true);
-
+                
                 funcionAvanzar();
             } catch (Exception e) {
                 System.out.println(e);
             }
-        else
+
+        } else {
+
             try {
-                
-                
-                    
-                var con = DriverManager.getConnection("jdbc:derby://localhost:1527/empresa", "AntFran", "netbeans");
-                Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
-                if (primeraVezFiltro){
+                if (primeraVezFiltro) {
                     rs = stmt.executeQuery(consulta);
                     primeraVezFiltro = false;
                 }
                 
-                
-                if(rs.getRow() == 1){
-                    agregarDatosTextField();
-                    botonAvanzar.setEnabled(false);
-                    botonRetroceder.setEnabled(false);
-                }else
-                    funcionAvanzar();
-                
-                
+                funcionAvanzar();
             } catch (Exception e) {
                 System.out.println(e);
             }
+
+        }
     }//GEN-LAST:event_botonAvanzarMouseClicked
 
     private void botonAplicarFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAplicarFiltroActionPerformed
@@ -699,54 +751,98 @@ public class InterfazGrafica extends javax.swing.JFrame {
         
         if (listaApellidosCombo.getSelectedIndex() != 0){
             filtro = true;
+            reiniciarCampos();
             apell = listaApellidosCombo.getItemAt(listaApellidosCombo.getSelectedIndex());
             consulta = "SELECT * FROM EMPLEADO WHERE APELLIDO = '"+apell+"'";
+            botonAplicarFiltro.setEnabled(false);
+            botonCancelarFiltro.setEnabled(true);
         }else
             VentanaEmergente.mostrarMensajeVentana("No introdujo ningún filtro");
         
     }//GEN-LAST:event_botonAplicarFiltroMouseClicked
 
+    private void botonCancelarFiltroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonCancelarFiltroMouseClicked
+        // TODO add your handling code here:
+        filtro = false;
+        botonAvanzar.setEnabled(true);
+        botonRetroceder.setEnabled(false);
+        primeraVezFiltro = true;
+        botonAplicarFiltro.setEnabled(true);
+        botonCancelarFiltro.setEnabled(false);
+        reiniciarCampos();
+        primeraVez= true;
+    }//GEN-LAST:event_botonCancelarFiltroMouseClicked
+
+    public void reiniciarCampos() {
+        numeroEmpleadoField.setText("");
+        nombreEmpleadoField.setText("");
+        apellidoEmpleadoField.setText("");
+        jLabelImagen.setText("");
+        jLabelImagen.setIcon(new ImageIcon());
+        sueldoEmpleadoField.setText("");
+        fechaAltaEmpleadoField.setText("");
+        salarioMaximoEmpleadoField.setText("");
+    }
+
+    private void botonCancelarFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarFiltroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonCancelarFiltroActionPerformed
+
+    private void salarioMaximoEmpleadoFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salarioMaximoEmpleadoFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_salarioMaximoEmpleadoFieldActionPerformed
+
+    private void fechaAltaEmpleadoFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fechaAltaEmpleadoFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fechaAltaEmpleadoFieldActionPerformed
+
+    private void nombreEmpleadoFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombreEmpleadoFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nombreEmpleadoFieldActionPerformed
+
     private void funcionAvanzar() throws SQLException {
         
         
-        if(!filtro){
-            rs.next();
-
-            if (rs.isLast())
-                botonAvanzar.setEnabled(false);
-
-            if (rs.isFirst()){
-                botonRetroceder.setEnabled(false);
-            }else
-                botonRetroceder.setEnabled(true);
-
-            rs.previous();
-
-            if (rs.next()){
+        if(!rs.isLast()){
+             botonAvanzar.setEnabled(true);
+                
+            if (rs.next()) {
+                
+                if(rs.isLast())
+                    botonAvanzar.setEnabled(false);
+                
                 agregarDatosTextField();
+            } else {
+                botonAvanzar.setEnabled(false);
+                VentanaEmergente.mostrarMensajeVentana("No hay mas registros en el filtro");
             }
         }else{
-            
-            if (rs.next()){
-                agregarDatosTextField();
-            }else{
-               VentanaEmergente.mostrarMensajeVentana("No hay mas registros en el filtro");
-           }
-           
+            botonAvanzar.setEnabled(false);
         }
         
-        
-            
-            
+        if(!rs.isFirst())
+            botonRetroceder.setEnabled(true);
+        else
+            botonRetroceder.setEnabled(false);
+       
     }
 
     private void agregarDatosTextField() throws SQLException {
+        
+        System.out.println(rs.getString(1)+" "+rs.getString(2)+" "+rs.getString(3)+" "+rs.getString(4)+" "+rs.getString(5)+" "+rs.getString(6));
         numeroEmpleadoField.setText(rs.getString(1));
         nombreEmpleadoField.setText(rs.getString(2));
         apellidoEmpleadoField.setText(rs.getString(3));
-        jLabelImagen.setIcon(new ImageIcon("./fotos/"+rs.getString(4)));
+        
+        //Redimensionamos la imagen
+        Image img= new ImageIcon("./fotos/"+rs.getString(4)).getImage();
+        ImageIcon img2 =new ImageIcon(img.getScaledInstance(172, 172, Image.SCALE_SMOOTH));
+        
+        jLabelImagen.setIcon(img2);
         sueldoEmpleadoField.setText(rs.getString(5));
-        fechaAltaEmpleadoField.setText(rs.getString(6));
+        salarioMaximoEmpleadoField.setText(rs.getString(6));
+        
+        fechaAltaEmpleadoField.setText(rs.getString(7));
     }
 
     /**
@@ -817,6 +913,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
     private javax.swing.JLabel filtroApellidosLabel;
     private javax.swing.JLabel fotoEmpleadoLabel;
     private javax.swing.JLabel jLabelImagen;
+    private javax.swing.JLabel jLabelSalario;
     private javax.swing.JComboBox<String> listaApellidosCombo;
     private javax.swing.JMenu menuOpciones;
     private javax.swing.JTextField nombreEmpleadoField;
@@ -824,6 +921,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
     private javax.swing.JTextField numeroEmpleadoField;
     private javax.swing.JLabel numeroEmpleadoLabel;
     private javax.swing.JScrollPane panelScroll;
+    private javax.swing.JTextField salarioMaximoEmpleadoField;
     private javax.swing.JTextField sueldoEmpleadoField;
     private javax.swing.JLabel sueldoEmpleadoLabel;
     private javax.swing.JLabel tituloInicio;
