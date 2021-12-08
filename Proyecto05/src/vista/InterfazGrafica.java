@@ -67,6 +67,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
         //Establecemos el color de la letra de las etiquetas
         tituloVisualizarJList.setForeground(letras);
         fechaFiltrar1Label.setForeground(letras);
+        fechaFiltrar2Label.setForeground(letras);
 
         //Establecemos el fondo del panel de scroll
         JListEmpleados.setBackground(fondoPanel);
@@ -76,14 +77,19 @@ public class InterfazGrafica extends javax.swing.JFrame {
         //Establecemos el color de fondo
         fechaFiltrarBoton.setBackground(fondoPanel);
         fechaFiltrarBoton.setForeground(letras);
+        fechaBuscarBoton.setBackground(fondoPanel);
+        fechaBuscarBoton.setForeground(letras);
 
         //Establecemos el color del field
         //Establecemos el color de fondo
         fechaFiltrar1Field.setBackground(fondoPanel);
         fechaFiltrar1Field.setForeground(letras);
+        fechaFiltrar2Field.setBackground(fondoPanel);
+        fechaFiltrar2Field.setForeground(letras);
 
-        //Establecemos el texto de 
+        //Establecemos el texto de los field de la fecha
         fechaFiltrar1Field.setText("");
+        fechaFiltrar2Field.setText("");
 
     }
 
@@ -224,7 +230,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
 
         panelScroll.setViewportView(JListEmpleados);
 
-        fechaFiltrar1Label.setText("Fecha 1");
+        fechaFiltrar1Label.setText("Primera fecha:");
 
         fechaBuscarBoton.setText("Buscar");
         fechaBuscarBoton.addActionListener(new java.awt.event.ActionListener() {
@@ -240,7 +246,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
             }
         });
 
-        fechaFiltrar2Label.setText("Fecha 2");
+        fechaFiltrar2Label.setText("Segunda fecha:");
 
         javax.swing.GroupLayout VisualizarJListPanelLayout = new javax.swing.GroupLayout(VisualizarJListPanel);
         VisualizarJListPanel.setLayout(VisualizarJListPanelLayout);
@@ -249,19 +255,19 @@ public class InterfazGrafica extends javax.swing.JFrame {
             .addGroup(VisualizarJListPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(VisualizarJListPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panelScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 688, Short.MAX_VALUE)
+                    .addComponent(panelScroll)
                     .addGroup(VisualizarJListPanelLayout.createSequentialGroup()
                         .addComponent(tituloVisualizarJList)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, VisualizarJListPanelLayout.createSequentialGroup()
                         .addComponent(fechaFiltrar1Label)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(fechaFiltrar1Field, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(fechaFiltrar2Label)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(fechaFiltrar2Field, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 165, Short.MAX_VALUE)
                         .addComponent(fechaBuscarBoton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(fechaFiltrarBoton)))
@@ -273,16 +279,17 @@ public class InterfazGrafica extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(tituloVisualizarJList)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 597, Short.MAX_VALUE)
+                .addComponent(panelScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 365, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(VisualizarJListPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(fechaBuscarBoton)
+                .addGroup(VisualizarJListPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(fechaFiltrarBoton)
-                    .addComponent(fechaFiltrar1Label)
-                    .addComponent(fechaFiltrar2Label)
-                    .addComponent(fechaFiltrar2Field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fechaFiltrar1Field, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(41, 41, 41))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, VisualizarJListPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(fechaFiltrar1Field, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(fechaFiltrar1Label)
+                        .addComponent(fechaFiltrar2Label)
+                        .addComponent(fechaFiltrar2Field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(fechaBuscarBoton))
+                .addGap(40, 40, 40))
         );
 
         panelScroll.getAccessibleContext().setAccessibleName("");
@@ -477,7 +484,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
                         .addGroup(VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabelSalario)
                             .addComponent(salarioMaximoEmpleadoField, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(231, Short.MAX_VALUE))
+                        .addContainerGap(281, Short.MAX_VALUE))
                     .addGroup(VisualizarUnoPanelLayout.createSequentialGroup()
                         .addComponent(filtroApellidosLabel)
                         .addGap(44, 44, 44)
@@ -567,10 +574,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(VisualizarJListPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 678, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(VisualizarJListPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(VisualizarUnoPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
