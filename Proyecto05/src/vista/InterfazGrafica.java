@@ -5,13 +5,20 @@
  */
 package vista;
 
+import controlador.ValidaFecha;
 import java.awt.Color;
 import java.awt.Image;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
+import modelo.Empleado;
 
 /**
  *
@@ -59,7 +66,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
 
         //Establecemos el color de la letra de las etiquetas
         tituloVisualizarJList.setForeground(letras);
-        fechaFiltrarLabel.setForeground(letras);
+        fechaFiltrar1Label.setForeground(letras);
 
         //Establecemos el fondo del panel de scroll
         JListEmpleados.setBackground(fondoPanel);
@@ -72,11 +79,11 @@ public class InterfazGrafica extends javax.swing.JFrame {
 
         //Establecemos el color del field
         //Establecemos el color de fondo
-        fechaFiltrarField.setBackground(fondoPanel);
-        fechaFiltrarField.setForeground(letras);
+        fechaFiltrar1Field.setBackground(fondoPanel);
+        fechaFiltrar1Field.setForeground(letras);
 
         //Establecemos el texto de 
-        fechaFiltrarField.setText("");
+        fechaFiltrar1Field.setText("");
 
     }
 
@@ -169,9 +176,12 @@ public class InterfazGrafica extends javax.swing.JFrame {
         tituloVisualizarJList = new javax.swing.JLabel();
         panelScroll = new javax.swing.JScrollPane();
         JListEmpleados = new javax.swing.JList<>();
-        fechaFiltrarLabel = new javax.swing.JLabel();
-        fechaFiltrarField = new javax.swing.JTextField();
+        fechaFiltrar1Label = new javax.swing.JLabel();
+        fechaFiltrar1Field = new javax.swing.JTextField();
+        fechaBuscarBoton = new javax.swing.JButton();
         fechaFiltrarBoton = new javax.swing.JButton();
+        fechaFiltrar2Label = new javax.swing.JLabel();
+        fechaFiltrar2Field = new javax.swing.JTextField();
         VisualizarUnoPanel = new javax.swing.JPanel();
         tituloVisualizarUno = new javax.swing.JLabel();
         numeroEmpleadoLabel = new javax.swing.JLabel();
@@ -214,11 +224,23 @@ public class InterfazGrafica extends javax.swing.JFrame {
 
         panelScroll.setViewportView(JListEmpleados);
 
-        fechaFiltrarLabel.setText("Filtrar por fecha:");
+        fechaFiltrar1Label.setText("Fecha 1");
 
-        fechaFiltrarField.setText("jTextField1");
+        fechaBuscarBoton.setText("Buscar");
+        fechaBuscarBoton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fechaBuscarBotonActionPerformed(evt);
+            }
+        });
 
         fechaFiltrarBoton.setText("Aplicar");
+        fechaFiltrarBoton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fechaFiltrarBotonActionPerformed(evt);
+            }
+        });
+
+        fechaFiltrar2Label.setText("Fecha 2");
 
         javax.swing.GroupLayout VisualizarJListPanelLayout = new javax.swing.GroupLayout(VisualizarJListPanel);
         VisualizarJListPanel.setLayout(VisualizarJListPanelLayout);
@@ -227,15 +249,21 @@ public class InterfazGrafica extends javax.swing.JFrame {
             .addGroup(VisualizarJListPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(VisualizarJListPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panelScroll)
+                    .addComponent(panelScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 688, Short.MAX_VALUE)
                     .addGroup(VisualizarJListPanelLayout.createSequentialGroup()
                         .addComponent(tituloVisualizarJList)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(VisualizarJListPanelLayout.createSequentialGroup()
-                        .addComponent(fechaFiltrarLabel)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, VisualizarJListPanelLayout.createSequentialGroup()
+                        .addComponent(fechaFiltrar1Label)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(fechaFiltrarField, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 428, Short.MAX_VALUE)
+                        .addComponent(fechaFiltrar1Field, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(fechaFiltrar2Label)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(fechaFiltrar2Field, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(fechaBuscarBoton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(fechaFiltrarBoton)))
                 .addContainerGap())
         );
@@ -245,14 +273,19 @@ public class InterfazGrafica extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(tituloVisualizarJList)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 597, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(VisualizarJListPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(fechaFiltrarLabel)
-                    .addComponent(fechaFiltrarField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fechaFiltrarBoton, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE))
-                .addContainerGap(105, Short.MAX_VALUE))
+                    .addComponent(fechaBuscarBoton)
+                    .addComponent(fechaFiltrarBoton)
+                    .addComponent(fechaFiltrar1Label)
+                    .addComponent(fechaFiltrar2Label)
+                    .addComponent(fechaFiltrar2Field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fechaFiltrar1Field, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(41, 41, 41))
         );
+
+        panelScroll.getAccessibleContext().setAccessibleName("");
 
         VisualizarUnoPanel.setPreferredSize(new java.awt.Dimension(700, 700));
 
@@ -391,11 +424,10 @@ public class InterfazGrafica extends javax.swing.JFrame {
                         .addGroup(VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabelImagen)
                             .addComponent(fechaAltaEmpleadoField, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, VisualizarUnoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(numeroEmpleadoField, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(nombreEmpleadoField)
-                                .addComponent(apellidoEmpleadoField, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(sueldoEmpleadoField, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE))
+                            .addComponent(numeroEmpleadoField, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(nombreEmpleadoField)
+                            .addComponent(apellidoEmpleadoField, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(sueldoEmpleadoField, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
                             .addComponent(botonAvanzar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(salarioMaximoEmpleadoField, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)))
                     .addComponent(botonRetroceder)
@@ -492,7 +524,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
             .addGroup(InicioPanelLayout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addComponent(tituloInicio)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 277, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 506, Short.MAX_VALUE)
                 .addComponent(autores)
                 .addGap(4, 4, 4)
                 .addComponent(autor1)
@@ -535,9 +567,10 @@ public class InterfazGrafica extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 700, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(VisualizarJListPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(VisualizarJListPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 678, Short.MAX_VALUE)
+                .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(VisualizarUnoPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -545,9 +578,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 477, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(VisualizarJListPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 477, Short.MAX_VALUE))
+            .addComponent(VisualizarJListPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 477, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(VisualizarUnoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 477, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -638,6 +669,13 @@ public class InterfazGrafica extends javax.swing.JFrame {
 
     private void VisualizarJListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VisualizarJListActionPerformed
         // TODO add your handling code here:
+        
+         try {
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+        } catch (Exception e) {
+            System.out.println("JDBC driver falied to load.");
+            return;
+        }
 
         //Desactivamos los paneles que no nos interesen
         VisualizarUnoPanel.show(false);
@@ -800,6 +838,137 @@ public class InterfazGrafica extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_nombreEmpleadoFieldActionPerformed
 
+    private void fechaBuscarBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fechaBuscarBotonActionPerformed
+        // TODO add your handling code here:
+        ArrayList<Empleado> empleados = new ArrayList();
+        
+        String cadenaAux = "";
+        
+        String[] arrayString = new String[7];
+        
+        DefaultListModel defLisMod = new DefaultListModel();
+        
+        JListEmpleados.setModel(defLisMod);
+        
+        //Establecemos la fecha de hoy para comparar
+        GregorianCalendar auxF = new GregorianCalendar();
+        int d = auxF.get(Calendar.DAY_OF_MONTH);
+        int m = auxF.get(Calendar.MONTH);
+        int a = auxF.get(Calendar.YEAR);
+
+        GregorianCalendar fechaHoy = new GregorianCalendar(a, m, d);
+        
+        int numero = 0;
+        String nombre = "";
+        String apellido = "";
+        String foto = "";
+        float sueldo = 0;
+        float sueldoMaximo = 0;
+        String fechaAux = "";
+        GregorianCalendar fechaAlta = null;
+        
+        GregorianCalendar fecha1Aux = fechaHoy;
+        GregorianCalendar fecha2Aux = fechaHoy;
+                
+        String fecha1 = "";
+        String fecha2 = "";
+        String consulta = "";
+        
+        if(banderaFiltroFecha == true){
+            
+            if(fechaFiltrar1Field.getText().length() >= 1){
+                fecha1 = fechaFiltrar1Field.getText();
+                fecha1Aux = ValidaFecha.setFechaAlta(fecha1, 0);
+            }
+            
+            if(fechaFiltrar2Field.getText().length() >= 1){
+                fecha2 = fechaFiltrar2Field.getText();
+                fecha2Aux = ValidaFecha.setFechaAlta(fecha2, 0);
+            }
+            
+            if(fecha1Aux != fechaHoy && fecha2Aux != fechaHoy){
+                consulta = "SELECT * FROM EMPLEADO WHERE FECHAALTA >= '"+fecha1+"' AND FECHAALTA <= '"+fecha2+"'";
+            }else{
+                System.out.print("\nEl filtro por fecha esta activado, pero la fecha es nula o erronea, asegurese de que sea correcta.");
+                consulta = "SELECT * FROM EMPLEADO";
+            }
+           
+        } else if (banderaFiltroFecha == false){
+            consulta = "SELECT * FROM EMPLEADO";
+        }
+        
+        try {
+
+            Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/empresa", "AntFran", "netbeans");
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(consulta);
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int numCols = rsmd.getColumnCount();
+
+            while (rs.next()) {
+                
+                cadenaAux = "";
+                
+                for (int i = 1; i <= numCols; i++) {
+                    
+                    cadenaAux += rs.getString(i);
+                    if(i != numCols){
+                        cadenaAux += ",";
+                    }
+                    
+                } 
+                
+                arrayString = cadenaAux.split(",");
+                
+                numero = Integer.parseInt(arrayString[0]);
+                nombre = arrayString[1];
+                apellido = arrayString[2];
+                foto = arrayString[3];
+                sueldo = Float.parseFloat(arrayString[4]);
+                sueldoMaximo = Float.parseFloat(arrayString[5]);
+                fechaAux = arrayString[6];
+                fechaAlta = ValidaFecha.setFechaAlta(fechaAux, 0);
+                
+                Empleado empleAux = new Empleado(numero, nombre, apellido, foto, sueldo, sueldoMaximo, fechaAlta);
+                
+                empleados.add(empleAux);
+                
+            }
+            rs.close();
+            stmt.close();
+            con.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        
+        for(Empleado aux: empleados){
+            fechaAux = format(aux.getFechaAlta());
+            defLisMod.addElement("Numero: " + aux.getNumero() + " Apellido: " + aux.getApellido() + " Sueldo: " + aux.getSueldo() + " Sueldo maximo: " + aux.getSueldoMaximo() + " Fecha de alta: " + fechaAux);
+        }
+    }//GEN-LAST:event_fechaBuscarBotonActionPerformed
+
+    private void fechaFiltrarBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fechaFiltrarBotonActionPerformed
+        // TODO add your handling code here:
+         // TODO add your handling code here:
+        
+        if(banderaFiltroFecha == false){
+            banderaFiltroFecha = true;
+        }else if(banderaFiltroFecha == true){
+            banderaFiltroFecha = false;
+        }
+    }//GEN-LAST:event_fechaFiltrarBotonActionPerformed
+
+      public static String format(GregorianCalendar calendar) { //pasa de gregorian calendar a string
+        
+        SimpleDateFormat fmt = new SimpleDateFormat("dd-MMM-yyyy");
+        fmt.setCalendar(calendar);
+        String dateFormatted = fmt.format(calendar.getTime());
+
+        return dateFormatted;
+        
+    } 
+    
     private void funcionAvanzar() throws SQLException {
         
         
@@ -826,6 +995,10 @@ public class InterfazGrafica extends javax.swing.JFrame {
             botonRetroceder.setEnabled(false);
        
     }
+    
+        private static boolean banderaFiltroFecha = false;
+
+       
 
     private void agregarDatosTextField() throws SQLException {
         
@@ -907,9 +1080,12 @@ public class InterfazGrafica extends javax.swing.JFrame {
     private javax.swing.JButton botonRetroceder;
     private javax.swing.JTextField fechaAltaEmpleadoField;
     private javax.swing.JLabel fechaAltaEmpleadoLabel;
+    private javax.swing.JButton fechaBuscarBoton;
+    private javax.swing.JTextField fechaFiltrar1Field;
+    private javax.swing.JLabel fechaFiltrar1Label;
+    private javax.swing.JTextField fechaFiltrar2Field;
+    private javax.swing.JLabel fechaFiltrar2Label;
     private javax.swing.JButton fechaFiltrarBoton;
-    private javax.swing.JTextField fechaFiltrarField;
-    private javax.swing.JLabel fechaFiltrarLabel;
     private javax.swing.JLabel filtroApellidosLabel;
     private javax.swing.JLabel fotoEmpleadoLabel;
     private javax.swing.JLabel jLabelImagen;
